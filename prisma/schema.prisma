@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  CUSTOMER
+  RESTAURANT_ADMIN
+  RIDER
+}
+
+enum OrderStatus {
+  PENDING
+  ACCEPTED
+  PREPARING
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  phone     String   @unique
+  email     String   @unique
+  password  String
+  role      Role     @default(CUSTOMER)
+  address   String?
+  orders    Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Restaurant {
+  id            String     @id @default(uuid())
+  name          String
+  address       String
+  rating        Float      @default(0.0)
+  openingHours  String
+  menuItems     MenuItem[]
+  orders        Order[]
+  adminId       String     
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
+
+model MenuItem {
+  id           String     @id @default(uuid())
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId String
+  name         String
+  price        Float
+  category     String
+  isAvailable  Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+}
+
+model DeliveryPartner {
+  id           String   @id @default(uuid())
+  userId       String   @unique 
+  vehicleType  String
+  locationLat  Float?
+  locationLng  Float?
+  availability Boolean  @default(false)
+  orders       Order[]
+  createdAt    DateTime @default(now())
+}
+
+model Order {
+  id                String           @id @default(uuid())
+  customer          User             @relation(fields: [customerId], references: [id])
+  customerId        String
+  restaurant        Restaurant       @relation(fields: [restaurantId], references: [id])
+  restaurantId      String
+  deliveryPartner   DeliveryPartner? @relation(fields: [deliveryPartnerId], references: [id])
+  deliveryPartnerId String?
+  status            OrderStatus      @default(PENDING)
+  amount            Float
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+}
