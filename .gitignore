@@ -64,3 +64,5 @@ Thumbs.db
 *.swo
 
 /generated/prisma
+
+/firebase-service-account.json

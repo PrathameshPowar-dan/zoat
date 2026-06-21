@@ -4,20 +4,23 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import prisma from './utils/prisma.js';
 
+// Import your new routes
+import authRoutes from './routes/auth.routes.js';
+
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Security and Parsing Middleware
 app.use(helmet());
 app.use(cors());
-app.use(express.json()); // Parses incoming JSON payloads
+app.use(express.json());
 
-// Health Check & DB Test Route
+// Attach the auth routes under the /api/auth prefix
+app.use('/api/auth', authRoutes);
+
 app.get('/api/health', async (req: Request, res: Response) => {
     try {
-        // A lightweight query to verify database connectivity
         await prisma.$queryRaw`SELECT 1`;
         res.status(200).json({
             status: 'success',
