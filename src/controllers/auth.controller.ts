@@ -1,7 +1,8 @@
 import { type Request, type Response } from 'express';
-import admin from '../config/firebase.js'; // Import your initialized admin
+import { getAuth } from 'firebase-admin/auth';
 import prisma from '../utils/prisma.js';
 import jwt from 'jsonwebtoken';
+import '../config/firebase.js'; // Ensure Firebase is initialized
 
 export const verifyFirebaseAndLogin = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -12,12 +13,12 @@ export const verifyFirebaseAndLogin = async (req: Request, res: Response): Promi
             return;
         }
 
-        // Verify token with Firebase
-        const decodedToken = await admin.auth().verifyIdToken(idToken);
+        // Verify token using the new modular getAuth()
+        const decodedToken = await getAuth().verifyIdToken(idToken);
         const { uid, phone_number, email, name } = decodedToken;
 
         // Find or create the user in PostgreSQL
-        let user = await prisma.user.findUnique({
+        let user = await prisma.user.findFirst({
             where: { firebaseUid: uid }
         });
 
@@ -27,7 +28,7 @@ export const verifyFirebaseAndLogin = async (req: Request, res: Response): Promi
                     firebaseUid: uid,
                     phone: phone_number || null,
                     email: email || null,
-                    name: name || 'Zoat User', // Can be updated by user later
+                    name: name || 'Zoat User', 
                 }
             });
         }
@@ -36,7 +37,7 @@ export const verifyFirebaseAndLogin = async (req: Request, res: Response): Promi
         const customJwt = jwt.sign(
             { id: user.id, role: user.role },
             process.env.JWT_SECRET as string,
-            { expiresIn: '7d' } // 7-day session
+            { expiresIn: '7d' } 
         );
 
         res.status(200).json({

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { verifyFirebaseAndLogin } from '../controllers/auth.controller.js';
-import { protectRoute, AuthRequest } from '../middlewares/auth.middleware.js';
+import { protectRoute, type AuthRequest } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 
