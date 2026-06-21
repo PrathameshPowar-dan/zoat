@@ -5,7 +5,7 @@ import { asyncHandler } from '../../utils/AsyncHandler.js';
 import { ApiError } from '../../utils/ApiError.js';
 import { ApiResponse } from '../../utils/ApiResponse.js';
 
-// 1. Banner API (Fetches Menu Items that have promotional images)
+// Banner API (Fetches Menu Items that have promotional images)
 export const getBanners = asyncHandler(async (req: Request, res: Response) => {
     const banners = await prisma.menuItem.findMany({
         where: { 
@@ -20,7 +20,7 @@ export const getBanners = asyncHandler(async (req: Request, res: Response) => {
     res.status(200).json(new ApiResponse(200, banners, "Banners fetched successfully"));
 });
 
-// 2. Location API (Finds restaurants within a specific radius using Haversine)
+// Location API (Finds restaurants within a specific radius using Haversine)
 export const getNearbyRestaurants = asyncHandler(async (req: Request, res: Response) => {
     const { lat, lng, radiusInKm = 5 } = req.query;
 
@@ -55,7 +55,7 @@ export const getNearbyRestaurants = asyncHandler(async (req: Request, res: Respo
     res.status(200).json(new ApiResponse(200, nearbyRestaurants, `Restaurants within ${radius}km fetched`));
 });
 
-// 3. Recommended / Hotel List (Top Rated)
+// Hotel List
 export const getRecommendedRestaurants = asyncHandler(async (req: Request, res: Response) => {
     const limit = parseInt(req.query.limit as string) || 10;
     
@@ -76,7 +76,7 @@ export const getRecommendedRestaurants = asyncHandler(async (req: Request, res: 
     res.status(200).json(new ApiResponse(200, restaurants, "Recommended restaurants fetched"));
 });
 
-// 4. Common Filter & Search API
+// Common Filter & Search API
 export const filterRestaurants = asyncHandler(async (req: Request, res: Response) => {
     const { isPureVeg, maxCost, cuisines, minRating, search } = req.query;
 

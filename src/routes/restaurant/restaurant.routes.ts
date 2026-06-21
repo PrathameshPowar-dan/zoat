@@ -1,4 +1,3 @@
-// src/routes/restaurant/restaurant.routes.ts
 import { Router } from 'express';
 import { 
     getBanners, 
@@ -9,7 +8,6 @@ import {
 
 const router = Router();
 
-// Define the endpoints
 router.get('/banners', getBanners);
 router.get('/nearby', getNearbyRestaurants);
 router.get('/recommended', getRecommendedRestaurants);
