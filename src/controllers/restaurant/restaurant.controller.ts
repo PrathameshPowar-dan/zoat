@@ -81,32 +81,43 @@ export const filterRestaurants = asyncHandler(async (req: Request, res: Response
     const { isPureVeg, maxCost, cuisines, minRating, search } = req.query;
 
     const filterConditions: any = {};
+    let menuItemsFilter: any = { take: 10 }; // Default: show 10 items
 
-    // Apply specific filters if they exist in the query parameters
     if (isPureVeg === 'true') filterConditions.isPureVeg = true;
     if (maxCost) filterConditions.costForTwo = { lte: parseInt(maxCost as string) };
     if (minRating) filterConditions.rating = { gte: parseFloat(minRating as string) };
     
     if (cuisines) {
-        // e.g., ?cuisines=Chinese,Italian
         const cuisineList = (cuisines as string).split(',');
         filterConditions.cuisines = { hasSome: cuisineList };
     }
     
-    // Allow searching by Restaurant Name OR Menu Item Name
     if (search) {
+        const searchTerm = search as string;
         filterConditions.OR = [
-            { name: { contains: search as string, mode: 'insensitive' } },
-            { menuItems: { some: { name: { contains: search as string, mode: 'insensitive' } } } }
+            { name: { contains: searchTerm, mode: 'insensitive' } },
+            { menuItems: { some: { name: { contains: searchTerm, mode: 'insensitive' } } } }
         ];
+
+        // If there is a search term, explicitly return the menu items that match it!
+        menuItemsFilter = {
+            where: { name: { contains: searchTerm, mode: 'insensitive' } },
+            take: 10
+        };
     }
 
     const restaurants = await prisma.restaurant.findMany({
         where: filterConditions,
         include: { 
-            menuItems: { take: 3 } // Preview a few menu items in the search results
+            menuItems: menuItemsFilter 
         },
     });
 
-    res.status(200).json(new ApiResponse(200, restaurants, "Filtered restaurants fetched"));
+    const results = restaurants.map(restaurant => {
+        if (search && restaurant.menuItems.length === 0) {
+        }
+        return restaurant;
+    });
+
+    res.status(200).json(new ApiResponse(200, results, "Filtered restaurants fetched"));
 });
