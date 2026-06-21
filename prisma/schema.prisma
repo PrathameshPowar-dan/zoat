@@ -39,8 +39,14 @@ model Restaurant {
   id            String     @id @default(uuid())
   name          String
   address       String
+  lat           Float?     // Added for Location & Radius API
+  lng           Float?     // Added for Location & Radius API
   rating        Float      @default(0.0)
   openingHours  String
+  isPureVeg     Boolean    @default(false) // Added for Common Filters
+  costForTwo    Int?       // Added for Common Filters
+  cuisines      String[]   // Added for Common Filters (e.g., ["North Indian", "Chinese"])
+  imageUrl      String?    // Added for Restaurant Banners
   menuItems     MenuItem[]
   orders        Order[]
   adminId       String     
@@ -55,6 +61,8 @@ model MenuItem {
   name         String
   price        Float
   category     String
+  isVeg        Boolean    @default(true) // Added for Common Filters
+  imageUrl     String?    // Added for the Banner API
   isAvailable  Boolean    @default(true)
   createdAt    DateTime   @default(now())
 }

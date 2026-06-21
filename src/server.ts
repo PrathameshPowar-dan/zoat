@@ -3,8 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import prisma from './utils/prisma.js';
-
-// Import your new routes
+import restaurantRoutes from './routes/restaurant/restaurant.routes.js';
 import authRoutes from './routes/auth/auth.routes.js';
 
 dotenv.config();
@@ -16,8 +15,9 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-// Attach the auth routes under the /api/auth prefix
+// Attach the routes to the app
 app.use('/api/auth', authRoutes);
+app.use('/api/restaurants', restaurantRoutes);
 
 app.get('/api/health', async (req: Request, res: Response) => {
     try {

@@ -93,8 +93,14 @@ export const RestaurantScalarFieldEnum = {
   id: 'id',
   name: 'name',
   address: 'address',
+  lat: 'lat',
+  lng: 'lng',
   rating: 'rating',
   openingHours: 'openingHours',
+  isPureVeg: 'isPureVeg',
+  costForTwo: 'costForTwo',
+  cuisines: 'cuisines',
+  imageUrl: 'imageUrl',
   adminId: 'adminId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -109,6 +115,8 @@ export const MenuItemScalarFieldEnum = {
   name: 'name',
   price: 'price',
   category: 'category',
+  isVeg: 'isVeg',
+  imageUrl: 'imageUrl',
   isAvailable: 'isAvailable',
   createdAt: 'createdAt'
 } as const
