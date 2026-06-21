@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import prisma from './utils/prisma.js';
 
 // Import your new routes
-import authRoutes from './routes/auth.routes.js';
+import authRoutes from './routes/auth/auth.routes.js';
 
 dotenv.config();
 

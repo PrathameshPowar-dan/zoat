@@ -1,23 +1,29 @@
-import { type Request, type Response, type NextFunction } from 'express';import jwt from 'jsonwebtoken';
+import { type Request, type Response, type NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+import { asyncHandler } from '../utils/AsyncHandler.js';
+import { ApiError } from '../utils/ApiError.js';
+import redis from '../config/redis.js';
 
-// Extend Express Request to include our custom user payload
 export interface AuthRequest extends Request {
     user?: any;
 }
 
-export const protectRoute = (req: AuthRequest, res: Response, next: NextFunction): void => {
+export const protectRoute = asyncHandler(async (req: AuthRequest, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split(' ')[1];
 
-    if (!token) {
-        res.status(401).json({ status: 'error', message: 'Access denied. No token provided.' });
-        return;
+    if (!token) throw new ApiError(401, "Access denied. No token provided.");
+
+    // Check if the token was blacklisted due to a logout
+    const isBlacklisted = await redis.get(`blacklist_${token}`);
+    if (isBlacklisted) {
+        throw new ApiError(401, "Session expired. Please log in again.");
     }
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-        req.user = decoded; // Attach user info to the request
+        req.user = decoded;
         next();
     } catch (error) {
-        res.status(403).json({ status: 'error', message: 'Invalid or expired token' });
+        throw new ApiError(403, "Invalid or expired token");
     }
-};
+});
