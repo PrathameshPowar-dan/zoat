@@ -14,7 +14,7 @@ router.get('/banners', getBanners);
 router.get('/categories', getCategories);
 router.get('/list', getRestaurantList);
 router.get('/top-rated', getTopRated);
-router.get('/search', filterRestaurants);
+router.get('/filter', filterRestaurants);
 router.get('/detail/:id', getRestaurantDetail); 
 
 export default router;
