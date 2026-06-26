@@ -42,3 +42,13 @@ export type DeliveryPartner = Prisma.DeliveryPartnerModel
  * 
  */
 export type Order = Prisma.OrderModel
+/**
+ * Model Banner
+ * 
+ */
+export type Banner = Prisma.BannerModel
+/**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel
