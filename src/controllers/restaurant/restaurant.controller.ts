@@ -26,14 +26,8 @@ export const getCategories = asyncHandler(async (req: Request, res: Response) =>
 export const getRestaurantList = asyncHandler(async (req: Request, res: Response) => {
     const restaurants = await prisma.restaurant.findMany({
         select: {
-            id: true,
-            name: true,
-            rating: true,
-            imageUrl: true,
-            cuisines: true,
-            costForTwo: true,
-            isPureVeg: true,
-            address: true
+            id: true, name: true, rating: true, imageUrl: true, 
+            cuisines: true, costForTwo: true, isPureVeg: true, address: true
         }
     });
     res.status(200).json(new ApiResponse(200, restaurants, "Restaurant list fetched"));
@@ -43,14 +37,9 @@ export const getRestaurantList = asyncHandler(async (req: Request, res: Response
 export const getTopRated = asyncHandler(async (req: Request, res: Response) => {
     const restaurants = await prisma.restaurant.findMany({
         orderBy: { rating: 'desc' },
-        take: 10, // Returns top 10
+        take: 10,
         select: {
-            id: true, 
-            name: true, 
-            rating: true, 
-            imageUrl: true, 
-            cuisines: true, 
-            costForTwo: true
+            id: true, name: true, rating: true, imageUrl: true, cuisines: true, costForTwo: true
         }
     });
     res.status(200).json(new ApiResponse(200, restaurants, "Top rated restaurants fetched"));
@@ -62,27 +51,18 @@ export const getRestaurantDetail = asyncHandler(async (req: Request, res: Respon
 
     const restaurant = await prisma.restaurant.findUnique({
         where: { id: String(id) },
-        include: {
-            menuItems: {
-                where: { isAvailable: true }
-            }
-        }
+        include: { menuItems: { where: { isAvailable: true } } }
     });
 
-    if (!restaurant) {
-        throw new ApiError(404, "Restaurant not found");
-    }
-
+    if (!restaurant) throw new ApiError(404, "Restaurant not found");
     res.status(200).json(new ApiResponse(200, restaurant, "Restaurant details fetched"));
 });
 
-// API - Location API (Finds restaurants within a specific radius using Haversine)
+// API - Nearby Restaurants API
 export const getNearbyRestaurants = asyncHandler(async (req: Request, res: Response) => {
     const { lat, lng, radiusInKm = 5 } = req.query;
 
-    if (!lat || !lng) {
-        throw new ApiError(400, "Latitude and Longitude are required query parameters");
-    }
+    if (!lat || !lng) throw new ApiError(400, "Latitude and Longitude are required query parameters");
 
     const latitude = parseFloat(lat as string);
     const longitude = parseFloat(lng as string);
@@ -111,7 +91,29 @@ export const getNearbyRestaurants = asyncHandler(async (req: Request, res: Respo
     res.status(200).json(new ApiResponse(200, nearbyRestaurants, `Restaurants within ${radius}km fetched`));
 });
 
-// API - Common Filter & Search API
+// API - Search Restaurants API
+export const searchRestaurants = asyncHandler(async (req: Request, res: Response) => {
+    const { restaurantName } = req.query; 
+
+    if (!restaurantName) {
+        res.status(200).json(new ApiResponse(200, [], "Please provide a search term (restaurantName)"));
+        return;
+    }
+
+    const searchTerm = restaurantName as string;
+
+    const restaurants = await prisma.restaurant.findMany({
+        where: {
+            OR: [
+                { name: { contains: searchTerm, mode: 'insensitive' } }, // Matches Restaurant Name
+            ]
+        }
+    });
+
+    res.status(200).json(new ApiResponse(200, restaurants, "Search results fetched"));
+});
+
+// API - Advanced Filters API
 export const filterRestaurants = asyncHandler(async (req: Request, res: Response) => {
     const { isPureVeg, maxCost, cuisines, minRating, search } = req.query;
 
