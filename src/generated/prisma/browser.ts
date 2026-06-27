@@ -23,6 +23,11 @@ export * from './enums.js';
  */
 export type User = Prisma.UserModel
 /**
+ * Model Address
+ * 
+ */
+export type Address = Prisma.AddressModel
+/**
  * Model Restaurant
  * 
  */
@@ -42,6 +47,11 @@ export type DeliveryPartner = Prisma.DeliveryPartnerModel
  * 
  */
 export type Order = Prisma.OrderModel
+/**
+ * Model OrderItem
+ * 
+ */
+export type OrderItem = Prisma.OrderItemModel
 /**
  * Model Banner
  * 

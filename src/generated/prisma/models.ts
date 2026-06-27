@@ -9,10 +9,12 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User.js'
+export type * from './models/Address.js'
 export type * from './models/Restaurant.js'
 export type * from './models/MenuItem.js'
 export type * from './models/DeliveryPartner.js'
 export type * from './models/Order.js'
+export type * from './models/OrderItem.js'
 export type * from './models/Banner.js'
 export type * from './models/Category.js'
 export type * from './commonInputTypes.js'

@@ -6,6 +6,8 @@ import prisma from './utils/prisma.js';
 
 import authRoutes from './routes/auth/auth.routes.js';
 import restaurantRoutes from './routes/restaurant/restaurant.routes.js';
+import orderRoutes from './routes/order/order.routes.js';
+import addressRoutes from './routes/user/address.routes.js';
 
 dotenv.config();
 
@@ -26,6 +28,8 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/restaurants', restaurantRoutes);
+app.use('/api/users/addresses', addressRoutes);
+app.use('/api/orders', orderRoutes);
 
 app.get('/api/health', async (req: Request, res: Response) => {
     try {

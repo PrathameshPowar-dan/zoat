@@ -52,10 +52,12 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  Address: 'Address',
   Restaurant: 'Restaurant',
   MenuItem: 'MenuItem',
   DeliveryPartner: 'DeliveryPartner',
   Order: 'Order',
+  OrderItem: 'OrderItem',
   Banner: 'Banner',
   Category: 'Category'
 } as const
@@ -89,6 +91,23 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const AddressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  street: 'street',
+  city: 'city',
+  state: 'state',
+  zipCode: 'zipCode',
+  lat: 'lat',
+  lng: 'lng',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AddressScalarFieldEnum = (typeof AddressScalarFieldEnum)[keyof typeof AddressScalarFieldEnum]
 
 
 export const RestaurantScalarFieldEnum = {
@@ -141,16 +160,28 @@ export type DeliveryPartnerScalarFieldEnum = (typeof DeliveryPartnerScalarFieldE
 
 export const OrderScalarFieldEnum = {
   id: 'id',
-  customerId: 'customerId',
+  userId: 'userId',
   restaurantId: 'restaurantId',
   deliveryPartnerId: 'deliveryPartnerId',
   status: 'status',
-  amount: 'amount',
+  totalAmount: 'totalAmount',
+  deliveryAddress: 'deliveryAddress',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
+
+
+export const OrderItemScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  menuItemId: 'menuItemId',
+  quantity: 'quantity',
+  priceAtTimeOfOrder: 'priceAtTimeOfOrder'
+} as const
+
+export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
 
 
 export const BannerScalarFieldEnum = {
