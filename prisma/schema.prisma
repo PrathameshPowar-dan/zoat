@@ -23,17 +23,18 @@ enum OrderStatus {
 }
 
 model User {
-  id          String   @id @default(uuid())
-  firebaseUid String   @unique
+  id          String    @id @default(uuid())
+  firebaseUid String?   @unique  // <-- Changed to Optional (?) for custom users
+  password    String?            // <-- Added for custom Email/Phone auth
   name        String?
-  phone       String?  @unique
-  email       String?  @unique
-  role        Role     @default(CUSTOMER)
+  phone       String?   @unique
+  email       String?   @unique
+  role        Role      @default(CUSTOMER)
   address     String?
   orders      Order[]
   addresses   Address[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Address {
