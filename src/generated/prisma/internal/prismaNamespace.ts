@@ -392,7 +392,8 @@ export const ModelName = {
   Order: 'Order',
   OrderItem: 'OrderItem',
   Banner: 'Banner',
-  Category: 'Category'
+  Category: 'Category',
+  TableBooking: 'TableBooking'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "address" | "restaurant" | "menuItem" | "deliveryPartner" | "order" | "orderItem" | "banner" | "category"
+    modelProps: "user" | "address" | "restaurant" | "menuItem" | "deliveryPartner" | "order" | "orderItem" | "banner" | "category" | "tableBooking"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1078,6 +1079,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TableBooking: {
+      payload: Prisma.$TableBookingPayload<ExtArgs>
+      fields: Prisma.TableBookingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TableBookingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TableBookingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TableBookingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TableBookingPayload>
+        }
+        findFirst: {
+          args: Prisma.TableBookingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TableBookingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TableBookingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TableBookingPayload>
+        }
+        findMany: {
+          args: Prisma.TableBookingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TableBookingPayload>[]
+        }
+        create: {
+          args: Prisma.TableBookingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TableBookingPayload>
+        }
+        createMany: {
+          args: Prisma.TableBookingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TableBookingCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TableBookingPayload>[]
+        }
+        delete: {
+          args: Prisma.TableBookingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TableBookingPayload>
+        }
+        update: {
+          args: Prisma.TableBookingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TableBookingPayload>
+        }
+        deleteMany: {
+          args: Prisma.TableBookingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TableBookingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TableBookingUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TableBookingPayload>[]
+        }
+        upsert: {
+          args: Prisma.TableBookingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TableBookingPayload>
+        }
+        aggregate: {
+          args: Prisma.TableBookingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTableBooking>
+        }
+        groupBy: {
+          args: Prisma.TableBookingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TableBookingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TableBookingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TableBookingCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1126,6 +1201,11 @@ export const UserScalarFieldEnum = {
   email: 'email',
   role: 'role',
   address: 'address',
+  gender: 'gender',
+  dateOfBirth: 'dateOfBirth',
+  preferredLanguage: 'preferredLanguage',
+  preferredCuisines: 'preferredCuisines',
+  profilePictureUrl: 'profilePictureUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1162,6 +1242,8 @@ export const RestaurantScalarFieldEnum = {
   costForTwo: 'costForTwo',
   cuisines: 'cuisines',
   imageUrl: 'imageUrl',
+  supportsDineIn: 'supportsDineIn',
+  dineInCapacity: 'dineInCapacity',
   adminId: 'adminId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1245,6 +1327,21 @@ export const CategoryScalarFieldEnum = {
 } as const
 
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
+export const TableBookingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  restaurantId: 'restaurantId',
+  bookingDateTime: 'bookingDateTime',
+  partySize: 'partySize',
+  specialRequest: 'specialRequest',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TableBookingScalarFieldEnum = (typeof TableBookingScalarFieldEnum)[keyof typeof TableBookingScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1367,6 +1464,20 @@ export type EnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
 export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OrderStatus[]'>
     
 
+
+/**
+ * Reference to a field of type 'TableBookingStatus'
+ */
+export type EnumTableBookingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TableBookingStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'TableBookingStatus[]'
+ */
+export type ListEnumTableBookingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TableBookingStatus[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -1486,6 +1597,7 @@ export type GlobalOmitConfig = {
   orderItem?: Prisma.OrderItemOmit
   banner?: Prisma.BannerOmit
   category?: Prisma.CategoryOmit
+  tableBooking?: Prisma.TableBookingOmit
 }
 
 /* Types for Logging */

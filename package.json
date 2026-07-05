@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "prisma generate && tsc",
+    "seed": "tsx prisma/seed.ts",
+    "test:dinein": "node scripts/test-dinein-protected.mjs",
+    "db:reset": "prisma migrate reset --force --skip-generate",
     "postinstall": "prisma generate",
     "start": "node dist/server.js"
   },

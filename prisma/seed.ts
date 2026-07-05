@@ -4,6 +4,7 @@ async function main() {
     console.log('🧹 Clearing existing data...');
     // We clear data in reverse order of relations to prevent foreign key errors
     await prisma.menuItem.deleteMany();
+    await prisma.tableBooking.deleteMany().catch(() => { });
     await prisma.order.deleteMany().catch(() => { });
     await prisma.restaurant.deleteMany();
     await prisma.category.deleteMany();
@@ -43,6 +44,8 @@ async function main() {
             isPureVeg: false,
             costForTwo: 600,
             rating: 4.5,
+            supportsDineIn: true,
+            dineInCapacity: 30,
             adminId,
             imageUrl: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
             cuisines: ['American', 'Italian', 'Desserts'],
@@ -62,6 +65,8 @@ async function main() {
             isPureVeg: true,
             costForTwo: 400,
             rating: 4.8,
+            supportsDineIn: true,
+            dineInCapacity: 24,
             adminId,
             imageUrl: 'https://images.unsplash.com/photo-1517055748809-5c4be461f687?auto=format&fit=crop&w=800&q=80',
             cuisines: ['Indian', 'Healthy'],
@@ -81,6 +86,8 @@ async function main() {
             isPureVeg: false,
             costForTwo: 1200,
             rating: 4.9,
+            supportsDineIn: true,
+            dineInCapacity: 18,
             adminId,
             imageUrl: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80',
             cuisines: ['Japanese', 'Healthy'],
@@ -100,6 +107,7 @@ async function main() {
             isPureVeg: true,
             costForTwo: 500,
             rating: 4.1,
+            supportsDineIn: false,
             adminId,
             imageUrl: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800&q=80',
             cuisines: ['Healthy'],
@@ -118,6 +126,8 @@ async function main() {
             isPureVeg: false,
             costForTwo: 800,
             rating: 4.4,
+            supportsDineIn: true,
+            dineInCapacity: 22,
             adminId,
             imageUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80',
             cuisines: ['Italian', 'Fast Food'],
@@ -137,6 +147,7 @@ async function main() {
             isPureVeg: true,
             costForTwo: 300,
             rating: 4.7,
+            supportsDineIn: false,
             adminId,
             imageUrl: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=800&q=80',
             cuisines: ['Desserts', 'Beverages'],

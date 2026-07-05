@@ -9,6 +9,12 @@ import {
     searchRestaurants,
     filterRestaurants
 } from '../../controllers/restaurant/restaurant.controller.js';
+import {
+    createTableBooking,
+    getDineInRestaurants,
+    getMyTableBookings
+} from '../../controllers/restaurant/dineIn.controller.js';
+import { protectRoute } from '../../middlewares/auth.middleware.js';
 
 const router = Router();
 
@@ -25,5 +31,10 @@ router.get('/search', searchRestaurants);
 // The Location & Filter APIs
 router.get('/nearby', getNearbyRestaurants);
 router.get('/filter', filterRestaurants);
+
+// Dine-in table booking APIs
+router.get('/dine-in/list', getDineInRestaurants);
+router.post('/dine-in/bookings', protectRoute, createTableBooking);
+router.get('/dine-in/bookings/me', protectRoute, getMyTableBookings);
 
 export default router;

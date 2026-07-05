@@ -22,19 +22,32 @@ enum OrderStatus {
   CANCELLED
 }
 
+enum TableBookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
 model User {
-  id          String    @id @default(uuid())
-  firebaseUid String?   @unique  // <-- Changed to Optional (?) for custom users
-  password    String?            // <-- Added for custom Email/Phone auth
-  name        String?
-  phone       String?   @unique
-  email       String?   @unique
-  role        Role      @default(CUSTOMER)
-  address     String?
-  orders      Order[]
-  addresses   Address[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id                  String    @id @default(uuid())
+  firebaseUid         String?   @unique  // <-- Changed to Optional (?) for custom users
+  password            String?            // <-- Added for custom Email/Phone auth
+  name                String?
+  phone               String?   @unique
+  email               String?   @unique
+  role                Role      @default(CUSTOMER)
+  address             String?
+  gender              String?            // MALE, FEMALE, OTHER
+  dateOfBirth         DateTime?
+  preferredLanguage   String?            // e.g., "en", "hi", "fr"
+  preferredCuisines   String[]           // e.g., ["North Indian", "Chinese"]
+  profilePictureUrl   String?
+  orders              Order[]
+  tableBookings       TableBooking[]
+  addresses           Address[]
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 }
 
 model Address {
@@ -64,8 +77,11 @@ model Restaurant {
   costForTwo    Int?       // Added for Common Filters
   cuisines      String[]   // Added for Common Filters (e.g., ["North Indian", "Chinese"])
   imageUrl      String?    // Added for Restaurant Banners
+  supportsDineIn Boolean   @default(false)
+  dineInCapacity Int?
   menuItems     MenuItem[]
   orders        Order[]
+  tableBookings TableBooking[]
   adminId       String     
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -137,4 +153,21 @@ model Category {
   imageUrl  String
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
+}
+
+model TableBooking {
+  id              String             @id @default(uuid())
+  user            User               @relation(fields: [userId], references: [id])
+  userId          String
+  restaurant      Restaurant         @relation(fields: [restaurantId], references: [id])
+  restaurantId    String
+  bookingDateTime DateTime
+  partySize       Int
+  specialRequest  String?
+  status          TableBookingStatus @default(PENDING)
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@index([restaurantId, bookingDateTime])
+  @@index([userId, createdAt])
 }

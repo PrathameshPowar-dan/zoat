@@ -192,7 +192,7 @@ export const verifyOtp = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const completeProfile = asyncHandler(async (req: Request, res: Response) => {
-    const { profileToken, name } = req.body;
+    const { profileToken, name, gender, dateOfBirth, preferredLanguage, preferredCuisines, profilePictureUrl } = req.body;
 
     if (!profileToken || typeof profileToken !== 'string') {
         throw new ApiError(400, 'Profile token is required.');
@@ -200,6 +200,35 @@ export const completeProfile = asyncHandler(async (req: Request, res: Response) 
 
     if (!name || typeof name !== 'string' || !name.trim()) {
         throw new ApiError(400, 'Name is required.');
+    }
+
+    if (!gender || typeof gender !== 'string' || !['MALE', 'FEMALE', 'OTHER'].includes(gender)) {
+        throw new ApiError(400, 'Gender is required and must be MALE, FEMALE, or OTHER.');
+    }
+
+    if (!dateOfBirth || typeof dateOfBirth !== 'string') {
+        throw new ApiError(400, 'Date of birth is required.');
+    }
+
+    const parsedDob = new Date(dateOfBirth);
+    if (isNaN(parsedDob.getTime())) {
+        throw new ApiError(400, 'Date of birth must be a valid date.');
+    }
+
+    if (!preferredLanguage || typeof preferredLanguage !== 'string' || !preferredLanguage.trim()) {
+        throw new ApiError(400, 'Preferred language is required.');
+    }
+
+    if (!Array.isArray(preferredCuisines) || preferredCuisines.length === 0) {
+        throw new ApiError(400, 'Preferred cuisines is required and must contain at least one cuisine.');
+    }
+
+    if (!preferredCuisines.every((cuisine) => typeof cuisine === 'string' && cuisine.trim())) {
+        throw new ApiError(400, 'All cuisines must be non-empty strings.');
+    }
+
+    if (profilePictureUrl && typeof profilePictureUrl !== 'string') {
+        throw new ApiError(400, 'Profile picture URL must be a string.');
     }
 
     const decoded = jwt.verify(profileToken, JWT_SECRET) as jwt.JwtPayload;
@@ -226,7 +255,12 @@ export const completeProfile = asyncHandler(async (req: Request, res: Response) 
                 data: {
                     name: name.trim(),
                     email: isEmail ? identifier : null,
-                    phone: !isEmail ? identifier : null
+                    phone: !isEmail ? identifier : null,
+                    gender: gender.toUpperCase(),
+                    dateOfBirth: parsedDob,
+                    preferredLanguage: preferredLanguage.trim(),
+                    preferredCuisines: preferredCuisines.map((c) => c.trim()),
+                    profilePictureUrl: profilePictureUrl?.trim() || null
                 }
             });
         } catch (error) {

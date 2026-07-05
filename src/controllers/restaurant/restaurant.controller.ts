@@ -27,7 +27,8 @@ export const getRestaurantList = asyncHandler(async (req: Request, res: Response
     const restaurants = await prisma.restaurant.findMany({
         select: {
             id: true, name: true, rating: true, imageUrl: true, 
-            cuisines: true, costForTwo: true, isPureVeg: true, address: true
+            cuisines: true, costForTwo: true, isPureVeg: true, address: true,
+            supportsDineIn: true, dineInCapacity: true
         }
     });
     res.status(200).json(new ApiResponse(200, restaurants, "Restaurant list fetched"));

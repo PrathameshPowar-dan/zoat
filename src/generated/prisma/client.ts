@@ -86,3 +86,8 @@ export type Banner = Prisma.BannerModel
  * 
  */
 export type Category = Prisma.CategoryModel
+/**
+ * Model TableBooking
+ * 
+ */
+export type TableBooking = Prisma.TableBookingModel
