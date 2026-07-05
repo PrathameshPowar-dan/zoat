@@ -4,6 +4,12 @@ import { asyncHandler } from '../utils/AsyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import redis from '../config/redis.js';
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET is required');
+}
+
 export interface AuthRequest extends Request {
     user?: any;
 }
@@ -20,7 +26,7 @@ export const protectRoute = asyncHandler(async (req: AuthRequest, res: Response,
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+        const decoded = jwt.verify(token, JWT_SECRET);
         req.user = decoded;
         next();
     } catch (error) {
