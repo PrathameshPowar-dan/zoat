@@ -9,6 +9,7 @@ async function main() {
     await prisma.restaurant.deleteMany();
     await prisma.category.deleteMany();
     await prisma.banner.deleteMany();
+    await prisma.user.deleteMany();
 
     console.log('🌱 Seeding Banners...');
     await prisma.banner.createMany({
