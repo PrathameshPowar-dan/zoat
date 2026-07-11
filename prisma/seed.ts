@@ -34,6 +34,20 @@ async function main() {
     });
 
     console.log('🌱 Seeding Restaurants & Menu Items...');
+    await prisma.user.create({
+        data: {
+            name: "Dan",
+            phone: "1234567890",
+            gender: "MALE",
+            // If dateOfBirth is a String in your schema, change this to "7/8/2003"
+            dateOfBirth: new Date("2003-07-08T00:00:00Z"),
+            preferredLanguage: "English",
+            preferredCuisines: ["Chinese"],
+            profilePictureUrl: "https://res.cloudinary.com/dpyttzuvx/image/upload/v1782456013/WhatsApp_Image_2026-06-24_at_23.22.12_qesoun.jpg"
+        },
+    });
+
+    console.log("Seeded User: Dan");
     const adminId = 'dummy-admin-id';
 
     const restaurants = [
