@@ -136,6 +136,22 @@ export const createTableBooking = asyncHandler(async (req: AuthRequest, res: Res
 
     const { start, end } = getHourRange(bookingDate);
 
+    const existingBookingByUserAtThatTime = await prisma.tableBooking.findFirst({
+        where: {
+            userId: req.user.id,
+            restaurantId: restaurant.id,
+            bookingDateTime: {
+                gte: start,
+                lt: end
+            },
+            status: { in: [...ACTIVE_BOOKING_STATUSES] }
+        }
+    });
+
+    if (existingBookingByUserAtThatTime) {
+        throw new ApiError(409, 'You already have an active booking at this restaurant for this time slot.');
+    }
+
     const existingSeats = await prisma.tableBooking.aggregate({
         where: {
             restaurantId: restaurant.id,
@@ -147,6 +163,7 @@ export const createTableBooking = asyncHandler(async (req: AuthRequest, res: Res
         },
         _sum: { partySize: true }
     });
+
 
     const alreadyBookedSeats = existingSeats._sum.partySize ?? 0;
     const maxCapacity = restaurant.dineInCapacity;
