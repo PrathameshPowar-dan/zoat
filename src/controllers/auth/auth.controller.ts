@@ -90,6 +90,8 @@ const generateOTP = () => {
     return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
+const DEV_BYPASS_OTP = '111111';
+
 // Send OTP (to Email or Phone)
 export const sendOtp = asyncHandler(async (req: Request, res: Response) => {
     const { identifier } = req.body;
@@ -98,6 +100,7 @@ export const sendOtp = asyncHandler(async (req: Request, res: Response) => {
 
     const sendByIdentifierKey = `otp:send:identifier:${normalizedIdentifier}`;
     const sendByIpKey = `otp:send:ip:${requestIp}`;
+
     const [identifierSendCount, ipSendCount] = await Promise.all([
         incrementWithWindow(sendByIdentifierKey, OTP_SEND_WINDOW_SECONDS),
         incrementWithWindow(sendByIpKey, OTP_SEND_WINDOW_SECONDS)
@@ -111,18 +114,27 @@ export const sendOtp = asyncHandler(async (req: Request, res: Response) => {
     const otpHash = hashOtp(otp);
     const otpKey = `otp:${normalizedIdentifier}`;
 
-    // Store the OTP in Redis. 'EX', 300 means it automatically expires/deletes after 5 minutes!
     await redis.set(otpKey, otpHash, 'EX', OTP_TTL_SECONDS);
 
-    // TODO: Later, we will add Twilio (for SMS) or Nodemailer (for Emails) here.
-    // For now, we print it to the console so your frontend developer can test it.
     if (process.env.NODE_ENV !== 'production') {
         console.log(`\n[DEV MODE] MOCK OTP FOR ${normalizedIdentifier}: ${otp}\n`);
     }
 
-    const responseData = { otp };
+    const responseData =
+        process.env.NODE_ENV !== 'production'
+            ? {
+                otp,
+                bypassOtp: DEV_BYPASS_OTP
+            }
+            : {};
 
-    res.status(200).json(new ApiResponse(200, responseData, `OTP sent successfully to ${normalizedIdentifier}`));
+    res.status(200).json(
+        new ApiResponse(
+            200,
+            responseData,
+            `OTP sent successfully to ${normalizedIdentifier}`
+        )
+    );
 });
 
 // Verify OTP & Login/Register
@@ -134,31 +146,45 @@ export const verifyOtp = asyncHandler(async (req: Request, res: Response) => {
     }
 
     const { normalizedIdentifier, isEmail } = normalizeAndValidateIdentifier(identifier);
+
     const otpKey = `otp:${normalizedIdentifier}`;
     const verifyAttemptsKey = `otp:attempts:${normalizedIdentifier}`;
-    const otpHash = hashOtp(otp.trim());
 
     const currentAttemptsRaw = await redis.get(verifyAttemptsKey);
     const currentAttempts = Number(currentAttemptsRaw || '0');
+
     if (currentAttempts >= OTP_VERIFY_ATTEMPT_LIMIT) {
         throw new ApiError(429, 'Too many failed OTP attempts. Please request a new OTP.');
     }
 
+    const isDevBypass =
+        process.env.NODE_ENV !== 'production' &&
+        otp.trim() === DEV_BYPASS_OTP;
+
+    const otpHash = hashOtp(otp.trim());
     const storedOtpHash = await redis.get(otpKey);
 
-    if (!storedOtpHash || storedOtpHash !== otpHash) {
-        const failedAttempts = await incrementWithWindow(verifyAttemptsKey, OTP_TTL_SECONDS);
+    if (!isDevBypass && (!storedOtpHash || storedOtpHash !== otpHash)) {
+        const failedAttempts = await incrementWithWindow(
+            verifyAttemptsKey,
+            OTP_TTL_SECONDS
+        );
+
         if (failedAttempts >= OTP_VERIFY_ATTEMPT_LIMIT) {
-            throw new ApiError(429, 'Too many failed OTP attempts. Please request a new OTP.');
+            throw new ApiError(
+                429,
+                'Too many failed OTP attempts. Please request a new OTP.'
+            );
         }
+
         throw new ApiError(401, 'Invalid or expired OTP.');
     }
 
-    // OTP is valid! Delete it from Redis so it cannot be reused (security best practice)
-    await redis.del(otpKey);
-    await redis.del(verifyAttemptsKey);
+    if (!isDevBypass) {
+        await redis.del(otpKey);
+        await redis.del(verifyAttemptsKey);
+    }
 
-    // Check if user already exists in the database
     let user = await prisma.user.findFirst({
         where: {
             OR: [
@@ -168,26 +194,47 @@ export const verifyOtp = asyncHandler(async (req: Request, res: Response) => {
         }
     });
 
-    // Existing users log in immediately.
     if (!user) {
-        const profileToken = generateProfileCompletionToken(normalizedIdentifier, isEmail);
-        return res.status(200).json(
-            new ApiResponse(
-                200,
-                {
-                    requiresProfileCompletion: true,
-                    profileToken
-                },
-                'OTP verified. Please complete your profile.'
-            )
-        );
+        if (process.env.NODE_ENV !== 'production') {
+            user = await prisma.user.create({
+                data: {
+                    name: 'Dev User',
+                    email: isEmail ? normalizedIdentifier : null,
+                    phone: !isEmail ? normalizedIdentifier : null,
+                    preferredLanguage: 'English',
+                    preferredCuisines: ['Indian']
+                }
+            });
+        } else {
+            const profileToken = generateProfileCompletionToken(
+                normalizedIdentifier,
+                isEmail
+            );
+
+            return res.status(200).json(
+                new ApiResponse(
+                    200,
+                    {
+                        requiresProfileCompletion: true,
+                        profileToken
+                    },
+                    'OTP verified. Please complete your profile.'
+                )
+            );
+        }
     }
 
-    // Generate Auth Token and send response
     const token = generateToken(user.id, user.role);
 
     res.status(200).json(
-        new ApiResponse(200, { user, token }, 'Authentication successful')
+        new ApiResponse(
+            200,
+            {
+                user,
+                token
+            },
+            'Authentication successful'
+        )
     );
 });
 
