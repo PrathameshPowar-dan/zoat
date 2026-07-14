@@ -198,11 +198,14 @@ export const verifyOtp = asyncHandler(async (req: Request, res: Response) => {
         if (process.env.NODE_ENV !== 'production') {
             user = await prisma.user.create({
                 data: {
-                    name: 'Dev User',
+                    name: "Dev User",
                     email: isEmail ? normalizedIdentifier : null,
                     phone: !isEmail ? normalizedIdentifier : null,
-                    preferredLanguage: 'English',
-                    preferredCuisines: ['Indian']
+                    gender: "OTHER",
+                    dateOfBirth: new Date("2000-01-01"),
+                    preferredLanguage: "English",
+                    preferredCuisines: ["Indian"],
+                    profilePictureUrl: "https://res.cloudinary.com/dpyttzuvx/image/upload/v1782456013/WhatsApp_Image_2026-06-24_at_23.22.12_qesoun.jpg"
                 }
             });
         } else {
