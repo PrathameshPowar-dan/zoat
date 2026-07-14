@@ -60,7 +60,8 @@ export const ModelName = {
   OrderItem: 'OrderItem',
   Banner: 'Banner',
   Category: 'Category',
-  TableBooking: 'TableBooking'
+  TableBooking: 'TableBooking',
+  SupportTicket: 'SupportTicket'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -148,6 +149,10 @@ export const MenuItemScalarFieldEnum = {
   isVeg: 'isVeg',
   imageUrl: 'imageUrl',
   isAvailable: 'isAvailable',
+  averageRating: 'averageRating',
+  totalRatings: 'totalRatings',
+  orderCount: 'orderCount',
+  isFeatured: 'isFeatured',
   createdAt: 'createdAt'
 } as const
 
@@ -229,6 +234,19 @@ export const TableBookingScalarFieldEnum = {
 } as const
 
 export type TableBookingScalarFieldEnum = (typeof TableBookingScalarFieldEnum)[keyof typeof TableBookingScalarFieldEnum]
+
+
+export const SupportTicketScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  subject: 'subject',
+  message: 'message',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupportTicketScalarFieldEnum = (typeof SupportTicketScalarFieldEnum)[keyof typeof SupportTicketScalarFieldEnum]
 
 
 export const SortOrder = {

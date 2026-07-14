@@ -8,6 +8,8 @@ import authRoutes from './routes/auth/auth.routes.js';
 import restaurantRoutes from './routes/restaurant/restaurant.routes.js';
 import orderRoutes from './routes/order/order.routes.js';
 import addressRoutes from './routes/user/address.routes.js';
+import menuRoutes from './routes/menu/menu.routes.js';
+import supportRoutes from './routes/support/support.routes.js';
 
 dotenv.config();
 
@@ -30,6 +32,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/restaurants', restaurantRoutes);
 app.use('/api/users/addresses', addressRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/menu', menuRoutes);
+app.use('/api/support', supportRoutes);
 
 app.get('/api/health', async (req: Request, res: Response) => {
     try {

@@ -67,3 +67,8 @@ export type Category = Prisma.CategoryModel
  * 
  */
 export type TableBooking = Prisma.TableBookingModel
+/**
+ * Model SupportTicket
+ * 
+ */
+export type SupportTicket = Prisma.SupportTicketModel

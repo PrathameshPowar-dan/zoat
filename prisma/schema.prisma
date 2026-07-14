@@ -46,6 +46,7 @@ model User {
   orders              Order[]
   tableBookings       TableBooking[]
   addresses           Address[]
+  supportTickets SupportTicket[]
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
 }
@@ -91,14 +92,22 @@ model MenuItem {
   id           String      @id @default(uuid())
   restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
   restaurantId String
+
   name         String
   price        Float
   category     String
-  isVeg        Boolean     @default(true) 
+  isVeg        Boolean     @default(true)
   imageUrl     String?
   isAvailable  Boolean     @default(true)
-  orderItems   OrderItem[]
-  createdAt    DateTime    @default(now())
+
+  averageRating Float      @default(0)
+  totalRatings  Int        @default(0)
+  orderCount    Int        @default(0)
+  isFeatured    Boolean    @default(false)
+
+  orderItems    OrderItem[]
+
+  createdAt     DateTime @default(now())
 }
 
 model DeliveryPartner {
@@ -170,4 +179,25 @@ model TableBooking {
 
   @@index([restaurantId, bookingDateTime])
   @@index([userId, createdAt])
+}
+
+enum SupportTicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+model SupportTicket {
+  id          String              @id @default(uuid())
+  user        User                @relation(fields: [userId], references: [id])
+  userId      String
+
+  subject     String
+  message     String
+
+  status      SupportTicketStatus @default(OPEN)
+
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
 }
