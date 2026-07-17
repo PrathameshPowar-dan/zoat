@@ -22,9 +22,11 @@ export const OrderStatus = {
   PENDING: 'PENDING',
   ACCEPTED: 'ACCEPTED',
   PREPARING: 'PREPARING',
+  READY_FOR_PICKUP: 'READY_FOR_PICKUP',
   OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
   DELIVERED: 'DELIVERED',
-  CANCELLED: 'CANCELLED'
+  CANCELLED: 'CANCELLED',
+  REJECTED: 'REJECTED'
 } as const
 
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]
@@ -48,3 +50,13 @@ export const SupportTicketStatus = {
 } as const
 
 export type SupportTicketStatus = (typeof SupportTicketStatus)[keyof typeof SupportTicketStatus]
+
+
+export const InteractionType = {
+  VIEW: 'VIEW',
+  ADD_TO_CART: 'ADD_TO_CART',
+  ORDER: 'ORDER',
+  FAVORITE: 'FAVORITE'
+} as const
+
+export type InteractionType = (typeof InteractionType)[keyof typeof InteractionType]

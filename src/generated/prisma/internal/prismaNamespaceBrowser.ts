@@ -61,7 +61,11 @@ export const ModelName = {
   Banner: 'Banner',
   Category: 'Category',
   TableBooking: 'TableBooking',
-  SupportTicket: 'SupportTicket'
+  SupportTicket: 'SupportTicket',
+  FavoriteMenuItem: 'FavoriteMenuItem',
+  MenuInteraction: 'MenuInteraction',
+  MenuRating: 'MenuRating',
+  OrderStatusHistory: 'OrderStatusHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -149,9 +153,10 @@ export const MenuItemScalarFieldEnum = {
   isVeg: 'isVeg',
   imageUrl: 'imageUrl',
   isAvailable: 'isAvailable',
+  orderCount: 'orderCount',
+  favoriteCount: 'favoriteCount',
   averageRating: 'averageRating',
   totalRatings: 'totalRatings',
-  orderCount: 'orderCount',
   isFeatured: 'isFeatured',
   createdAt: 'createdAt'
 } as const
@@ -247,6 +252,50 @@ export const SupportTicketScalarFieldEnum = {
 } as const
 
 export type SupportTicketScalarFieldEnum = (typeof SupportTicketScalarFieldEnum)[keyof typeof SupportTicketScalarFieldEnum]
+
+
+export const FavoriteMenuItemScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  menuItemId: 'menuItemId',
+  createdAt: 'createdAt'
+} as const
+
+export type FavoriteMenuItemScalarFieldEnum = (typeof FavoriteMenuItemScalarFieldEnum)[keyof typeof FavoriteMenuItemScalarFieldEnum]
+
+
+export const MenuInteractionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  menuItemId: 'menuItemId',
+  interaction: 'interaction',
+  createdAt: 'createdAt'
+} as const
+
+export type MenuInteractionScalarFieldEnum = (typeof MenuInteractionScalarFieldEnum)[keyof typeof MenuInteractionScalarFieldEnum]
+
+
+export const MenuRatingScalarFieldEnum = {
+  id: 'id',
+  rating: 'rating',
+  review: 'review',
+  userId: 'userId',
+  menuItemId: 'menuItemId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MenuRatingScalarFieldEnum = (typeof MenuRatingScalarFieldEnum)[keyof typeof MenuRatingScalarFieldEnum]
+
+
+export const OrderStatusHistoryScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type OrderStatusHistoryScalarFieldEnum = (typeof OrderStatusHistoryScalarFieldEnum)[keyof typeof OrderStatusHistoryScalarFieldEnum]
 
 
 export const SortOrder = {

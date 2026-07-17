@@ -72,3 +72,23 @@ export type TableBooking = Prisma.TableBookingModel
  * 
  */
 export type SupportTicket = Prisma.SupportTicketModel
+/**
+ * Model FavoriteMenuItem
+ * 
+ */
+export type FavoriteMenuItem = Prisma.FavoriteMenuItemModel
+/**
+ * Model MenuInteraction
+ * 
+ */
+export type MenuInteraction = Prisma.MenuInteractionModel
+/**
+ * Model MenuRating
+ * 
+ */
+export type MenuRating = Prisma.MenuRatingModel
+/**
+ * Model OrderStatusHistory
+ * 
+ */
+export type OrderStatusHistory = Prisma.OrderStatusHistoryModel

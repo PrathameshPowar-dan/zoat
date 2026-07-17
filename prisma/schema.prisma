@@ -17,9 +17,11 @@ enum OrderStatus {
   PENDING
   ACCEPTED
   PREPARING
+  READY_FOR_PICKUP
   OUT_FOR_DELIVERY
   DELIVERED
   CANCELLED
+  REJECTED
 }
 
 enum TableBookingStatus {
@@ -30,25 +32,28 @@ enum TableBookingStatus {
 }
 
 model User {
-  id                  String    @id @default(uuid())
-  firebaseUid         String?   @unique  // <-- Changed to Optional (?) for custom users
-  password            String?            // <-- Added for custom Email/Phone auth
-  name                String?
-  phone               String?   @unique
-  email               String?   @unique
-  role                Role      @default(CUSTOMER)
-  address             String?
-  gender              String?            // MALE, FEMALE, OTHER
-  dateOfBirth         DateTime?
-  preferredLanguage   String?            // e.g., "en", "hi", "fr"
-  preferredCuisines   String[]           // e.g., ["North Indian", "Chinese"]
-  profilePictureUrl   String?
-  orders              Order[]
-  tableBookings       TableBooking[]
-  addresses           Address[]
-  supportTickets SupportTicket[]
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
+  id                String             @id @default(uuid())
+  firebaseUid       String?            @unique // <-- Changed to Optional (?) for custom users
+  password          String? // <-- Added for custom Email/Phone auth
+  name              String?
+  phone             String?            @unique
+  email             String?            @unique
+  role              Role               @default(CUSTOMER)
+  address           String?
+  gender            String? // MALE, FEMALE, OTHER
+  dateOfBirth       DateTime?
+  preferredLanguage String? // e.g., "en", "hi", "fr"
+  preferredCuisines String[] // e.g., ["North Indian", "Chinese"]
+  profilePictureUrl String?
+  orders            Order[]
+  tableBookings     TableBooking[]
+  addresses         Address[]
+  supportTickets    SupportTicket[]
+  menuRatings       MenuRating[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  favoriteMenuItems FavoriteMenuItem[]
+  menuInteractions  MenuInteraction[]
 }
 
 model Address {
@@ -59,7 +64,7 @@ model Address {
   city      String
   state     String
   zipCode   String
-  lat       Float?   
+  lat       Float?
   lng       Float?
   isDefault Boolean  @default(false)
   createdAt DateTime @default(now())
@@ -67,52 +72,57 @@ model Address {
 }
 
 model Restaurant {
-  id            String     @id @default(uuid())
-  name          String
-  address       String
-  lat           Float?     // Added for Location & Radius API
-  lng           Float?     // Added for Location & Radius API
-  rating        Float      @default(0.0)
-  openingHours  String
-  isPureVeg     Boolean    @default(false) // Added for Common Filters
-  costForTwo    Int?       // Added for Common Filters
-  cuisines      String[]   // Added for Common Filters (e.g., ["North Indian", "Chinese"])
-  imageUrl      String?    // Added for Restaurant Banners
-  supportsDineIn Boolean   @default(false)
+  id             String         @id @default(uuid())
+  name           String
+  address        String
+  lat            Float? // Added for Location & Radius API
+  lng            Float? // Added for Location & Radius API
+  rating         Float          @default(0.0)
+  openingHours   String
+  isPureVeg      Boolean        @default(false) // Added for Common Filters
+  costForTwo     Int? // Added for Common Filters
+  cuisines       String[] // Added for Common Filters (e.g., ["North Indian", "Chinese"])
+  imageUrl       String? // Added for Restaurant Banners
+  supportsDineIn Boolean        @default(false)
   dineInCapacity Int?
-  menuItems     MenuItem[]
-  orders        Order[]
-  tableBookings TableBooking[]
-  adminId       String     
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  menuItems      MenuItem[]
+  orders         Order[]
+  tableBookings  TableBooking[]
+  adminId        String
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 }
 
 model MenuItem {
-  id           String      @id @default(uuid())
-  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
+  id           String     @id @default(uuid())
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId String
 
-  name         String
-  price        Float
-  category     String
-  isVeg        Boolean     @default(true)
-  imageUrl     String?
-  isAvailable  Boolean     @default(true)
+  name        String
+  price       Float
+  category    String
+  isVeg       Boolean @default(true)
+  imageUrl    String?
+  isAvailable Boolean @default(true)
 
-  averageRating Float      @default(0)
-  totalRatings  Int        @default(0)
-  orderCount    Int        @default(0)
-  isFeatured    Boolean    @default(false)
+  orderCount    Int   @default(0)
+  favoriteCount Int   @default(0)
+  averageRating Float @default(0)
+  totalRatings  Int   @default(0)
 
-  orderItems    OrderItem[]
+  ratings    MenuRating[]
+  isFeatured Boolean      @default(false)
 
-  createdAt     DateTime @default(now())
+  orderItems OrderItem[]
+
+  createdAt         DateTime           @default(now())
+  favoriteMenuItems FavoriteMenuItem[]
+  menuInteractions  MenuInteraction[]
 }
 
 model DeliveryPartner {
   id           String   @id @default(uuid())
-  userId       String   @unique 
+  userId       String   @unique
   vehicleType  String
   locationLat  Float?
   locationLng  Float?
@@ -122,19 +132,20 @@ model DeliveryPartner {
 }
 
 model Order {
-  id                String           @id @default(uuid())
-  user              User             @relation(fields: [userId], references: [id])
-  userId            String           
-  restaurant        Restaurant       @relation(fields: [restaurantId], references: [id])
-  restaurantId      String
-  deliveryPartner   DeliveryPartner? @relation(fields: [deliveryPartnerId], references: [id])
-  deliveryPartnerId String?
-  status            OrderStatus      @default(PENDING)
-  totalAmount       Float            
-  deliveryAddress   String           
-  items             OrderItem[]      
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  id                   String               @id @default(uuid())
+  user                 User                 @relation(fields: [userId], references: [id])
+  userId               String
+  restaurant           Restaurant           @relation(fields: [restaurantId], references: [id])
+  restaurantId         String
+  deliveryPartner      DeliveryPartner?     @relation(fields: [deliveryPartnerId], references: [id])
+  deliveryPartnerId    String?
+  status               OrderStatus          @default(PENDING)
+  totalAmount          Float
+  deliveryAddress      String
+  items                OrderItem[]
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+  orderStatusHistories OrderStatusHistory[]
 }
 
 model OrderItem {
@@ -144,16 +155,16 @@ model OrderItem {
   menuItem           MenuItem @relation(fields: [menuItemId], references: [id])
   menuItemId         String
   quantity           Int
-  priceAtTimeOfOrder Float    
+  priceAtTimeOfOrder Float
 }
 
 model Banner {
-  id        String   @id @default(uuid())
-  bannerName      String @default("veg-banner")
-  imageUrl  String
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(uuid())
+  bannerName String   @default("veg-banner")
+  imageUrl   String
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Category {
@@ -189,15 +200,80 @@ enum SupportTicketStatus {
 }
 
 model SupportTicket {
-  id          String              @id @default(uuid())
-  user        User                @relation(fields: [userId], references: [id])
-  userId      String
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 
-  subject     String
-  message     String
+  subject String
+  message String
 
-  status      SupportTicketStatus @default(OPEN)
+  status SupportTicketStatus @default(OPEN)
 
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FavoriteMenuItem {
+  id String @id @default(uuid())
+
+  userId     String
+  menuItemId String
+
+  user     User     @relation(fields: [userId], references: [id])
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, menuItemId])
+}
+
+enum InteractionType {
+  VIEW
+  ADD_TO_CART
+  ORDER
+  FAVORITE
+}
+
+model MenuInteraction {
+  id String @id @default(uuid())
+
+  userId     String
+  menuItemId String
+
+  interaction InteractionType
+
+  createdAt DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id])
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id])
+}
+
+model MenuRating {
+  id String @id @default(uuid())
+
+  rating Int
+  review String?
+
+  userId     String
+  menuItemId String
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, menuItemId])
+}
+
+model OrderStatusHistory {
+  id String @id @default(uuid())
+
+  orderId String
+
+  status OrderStatus
+
+  createdAt DateTime @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }

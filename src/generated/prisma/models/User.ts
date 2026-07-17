@@ -262,6 +262,9 @@ export type UserWhereInput = {
   tableBookings?: Prisma.TableBookingListRelationFilter
   addresses?: Prisma.AddressListRelationFilter
   supportTickets?: Prisma.SupportTicketListRelationFilter
+  menuRatings?: Prisma.MenuRatingListRelationFilter
+  favoriteMenuItems?: Prisma.FavoriteMenuItemListRelationFilter
+  menuInteractions?: Prisma.MenuInteractionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -284,6 +287,9 @@ export type UserOrderByWithRelationInput = {
   tableBookings?: Prisma.TableBookingOrderByRelationAggregateInput
   addresses?: Prisma.AddressOrderByRelationAggregateInput
   supportTickets?: Prisma.SupportTicketOrderByRelationAggregateInput
+  menuRatings?: Prisma.MenuRatingOrderByRelationAggregateInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemOrderByRelationAggregateInput
+  menuInteractions?: Prisma.MenuInteractionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -309,6 +315,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   tableBookings?: Prisma.TableBookingListRelationFilter
   addresses?: Prisma.AddressListRelationFilter
   supportTickets?: Prisma.SupportTicketListRelationFilter
+  menuRatings?: Prisma.MenuRatingListRelationFilter
+  favoriteMenuItems?: Prisma.FavoriteMenuItemListRelationFilter
+  menuInteractions?: Prisma.MenuInteractionListRelationFilter
 }, "id" | "firebaseUid" | "phone" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -373,6 +382,9 @@ export type UserCreateInput = {
   tableBookings?: Prisma.TableBookingCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -395,6 +407,9 @@ export type UserUncheckedCreateInput = {
   tableBookings?: Prisma.TableBookingUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -417,6 +432,9 @@ export type UserUpdateInput = {
   tableBookings?: Prisma.TableBookingUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -439,6 +457,9 @@ export type UserUncheckedUpdateInput = {
   tableBookings?: Prisma.TableBookingUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -645,6 +666,48 @@ export type UserUpdateOneRequiredWithoutSupportTicketsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSupportTicketsInput, Prisma.UserUpdateWithoutSupportTicketsInput>, Prisma.UserUncheckedUpdateWithoutSupportTicketsInput>
 }
 
+export type UserCreateNestedOneWithoutFavoriteMenuItemsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoriteMenuItemsInput, Prisma.UserUncheckedCreateWithoutFavoriteMenuItemsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoriteMenuItemsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFavoriteMenuItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFavoriteMenuItemsInput, Prisma.UserUncheckedCreateWithoutFavoriteMenuItemsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFavoriteMenuItemsInput
+  upsert?: Prisma.UserUpsertWithoutFavoriteMenuItemsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFavoriteMenuItemsInput, Prisma.UserUpdateWithoutFavoriteMenuItemsInput>, Prisma.UserUncheckedUpdateWithoutFavoriteMenuItemsInput>
+}
+
+export type UserCreateNestedOneWithoutMenuInteractionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMenuInteractionsInput, Prisma.UserUncheckedCreateWithoutMenuInteractionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMenuInteractionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMenuInteractionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMenuInteractionsInput, Prisma.UserUncheckedCreateWithoutMenuInteractionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMenuInteractionsInput
+  upsert?: Prisma.UserUpsertWithoutMenuInteractionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMenuInteractionsInput, Prisma.UserUpdateWithoutMenuInteractionsInput>, Prisma.UserUncheckedUpdateWithoutMenuInteractionsInput>
+}
+
+export type UserCreateNestedOneWithoutMenuRatingsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMenuRatingsInput, Prisma.UserUncheckedCreateWithoutMenuRatingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMenuRatingsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMenuRatingsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMenuRatingsInput, Prisma.UserUncheckedCreateWithoutMenuRatingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMenuRatingsInput
+  upsert?: Prisma.UserUpsertWithoutMenuRatingsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMenuRatingsInput, Prisma.UserUpdateWithoutMenuRatingsInput>, Prisma.UserUncheckedUpdateWithoutMenuRatingsInput>
+}
+
 export type UserCreateWithoutAddressesInput = {
   id?: string
   firebaseUid?: string | null
@@ -664,6 +727,9 @@ export type UserCreateWithoutAddressesInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   tableBookings?: Prisma.TableBookingCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAddressesInput = {
@@ -685,6 +751,9 @@ export type UserUncheckedCreateWithoutAddressesInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   tableBookings?: Prisma.TableBookingUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAddressesInput = {
@@ -722,6 +791,9 @@ export type UserUpdateWithoutAddressesInput = {
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   tableBookings?: Prisma.TableBookingUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAddressesInput = {
@@ -743,6 +815,9 @@ export type UserUncheckedUpdateWithoutAddressesInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   tableBookings?: Prisma.TableBookingUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOrdersInput = {
@@ -764,6 +839,9 @@ export type UserCreateWithoutOrdersInput = {
   tableBookings?: Prisma.TableBookingCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrdersInput = {
@@ -785,6 +863,9 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   tableBookings?: Prisma.TableBookingUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrdersInput = {
@@ -822,6 +903,9 @@ export type UserUpdateWithoutOrdersInput = {
   tableBookings?: Prisma.TableBookingUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -843,6 +927,9 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   tableBookings?: Prisma.TableBookingUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTableBookingsInput = {
@@ -864,6 +951,9 @@ export type UserCreateWithoutTableBookingsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTableBookingsInput = {
@@ -885,6 +975,9 @@ export type UserUncheckedCreateWithoutTableBookingsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTableBookingsInput = {
@@ -922,6 +1015,9 @@ export type UserUpdateWithoutTableBookingsInput = {
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTableBookingsInput = {
@@ -943,6 +1039,9 @@ export type UserUncheckedUpdateWithoutTableBookingsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSupportTicketsInput = {
@@ -964,6 +1063,9 @@ export type UserCreateWithoutSupportTicketsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   tableBookings?: Prisma.TableBookingCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSupportTicketsInput = {
@@ -985,6 +1087,9 @@ export type UserUncheckedCreateWithoutSupportTicketsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   tableBookings?: Prisma.TableBookingUncheckedCreateNestedManyWithoutUserInput
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSupportTicketsInput = {
@@ -1022,6 +1127,9 @@ export type UserUpdateWithoutSupportTicketsInput = {
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   tableBookings?: Prisma.TableBookingUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSupportTicketsInput = {
@@ -1043,6 +1151,345 @@ export type UserUncheckedUpdateWithoutSupportTicketsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   tableBookings?: Prisma.TableBookingUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutFavoriteMenuItemsInput = {
+  id?: string
+  firebaseUid?: string | null
+  password?: string | null
+  name?: string | null
+  phone?: string | null
+  email?: string | null
+  role?: $Enums.Role
+  address?: string | null
+  gender?: string | null
+  dateOfBirth?: Date | string | null
+  preferredLanguage?: string | null
+  preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
+  profilePictureUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  tableBookings?: Prisma.TableBookingCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFavoriteMenuItemsInput = {
+  id?: string
+  firebaseUid?: string | null
+  password?: string | null
+  name?: string | null
+  phone?: string | null
+  email?: string | null
+  role?: $Enums.Role
+  address?: string | null
+  gender?: string | null
+  dateOfBirth?: Date | string | null
+  preferredLanguage?: string | null
+  preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
+  profilePictureUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  tableBookings?: Prisma.TableBookingUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFavoriteMenuItemsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFavoriteMenuItemsInput, Prisma.UserUncheckedCreateWithoutFavoriteMenuItemsInput>
+}
+
+export type UserUpsertWithoutFavoriteMenuItemsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFavoriteMenuItemsInput, Prisma.UserUncheckedUpdateWithoutFavoriteMenuItemsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFavoriteMenuItemsInput, Prisma.UserUncheckedCreateWithoutFavoriteMenuItemsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFavoriteMenuItemsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFavoriteMenuItemsInput, Prisma.UserUncheckedUpdateWithoutFavoriteMenuItemsInput>
+}
+
+export type UserUpdateWithoutFavoriteMenuItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firebaseUid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
+  profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  tableBookings?: Prisma.TableBookingUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFavoriteMenuItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firebaseUid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
+  profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  tableBookings?: Prisma.TableBookingUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutMenuInteractionsInput = {
+  id?: string
+  firebaseUid?: string | null
+  password?: string | null
+  name?: string | null
+  phone?: string | null
+  email?: string | null
+  role?: $Enums.Role
+  address?: string | null
+  gender?: string | null
+  dateOfBirth?: Date | string | null
+  preferredLanguage?: string | null
+  preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
+  profilePictureUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  tableBookings?: Prisma.TableBookingCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutMenuInteractionsInput = {
+  id?: string
+  firebaseUid?: string | null
+  password?: string | null
+  name?: string | null
+  phone?: string | null
+  email?: string | null
+  role?: $Enums.Role
+  address?: string | null
+  gender?: string | null
+  dateOfBirth?: Date | string | null
+  preferredLanguage?: string | null
+  preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
+  profilePictureUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  tableBookings?: Prisma.TableBookingUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutMenuInteractionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMenuInteractionsInput, Prisma.UserUncheckedCreateWithoutMenuInteractionsInput>
+}
+
+export type UserUpsertWithoutMenuInteractionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMenuInteractionsInput, Prisma.UserUncheckedUpdateWithoutMenuInteractionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMenuInteractionsInput, Prisma.UserUncheckedCreateWithoutMenuInteractionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMenuInteractionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMenuInteractionsInput, Prisma.UserUncheckedUpdateWithoutMenuInteractionsInput>
+}
+
+export type UserUpdateWithoutMenuInteractionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firebaseUid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
+  profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  tableBookings?: Prisma.TableBookingUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMenuInteractionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firebaseUid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
+  profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  tableBookings?: Prisma.TableBookingUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutMenuRatingsInput = {
+  id?: string
+  firebaseUid?: string | null
+  password?: string | null
+  name?: string | null
+  phone?: string | null
+  email?: string | null
+  role?: $Enums.Role
+  address?: string | null
+  gender?: string | null
+  dateOfBirth?: Date | string | null
+  preferredLanguage?: string | null
+  preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
+  profilePictureUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  tableBookings?: Prisma.TableBookingCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutMenuRatingsInput = {
+  id?: string
+  firebaseUid?: string | null
+  password?: string | null
+  name?: string | null
+  phone?: string | null
+  email?: string | null
+  role?: $Enums.Role
+  address?: string | null
+  gender?: string | null
+  dateOfBirth?: Date | string | null
+  preferredLanguage?: string | null
+  preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
+  profilePictureUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  tableBookings?: Prisma.TableBookingUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutMenuRatingsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMenuRatingsInput, Prisma.UserUncheckedCreateWithoutMenuRatingsInput>
+}
+
+export type UserUpsertWithoutMenuRatingsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMenuRatingsInput, Prisma.UserUncheckedUpdateWithoutMenuRatingsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMenuRatingsInput, Prisma.UserUncheckedCreateWithoutMenuRatingsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMenuRatingsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMenuRatingsInput, Prisma.UserUncheckedUpdateWithoutMenuRatingsInput>
+}
+
+export type UserUpdateWithoutMenuRatingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firebaseUid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
+  profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  tableBookings?: Prisma.TableBookingUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMenuRatingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firebaseUid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
+  profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  tableBookings?: Prisma.TableBookingUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1055,6 +1502,9 @@ export type UserCountOutputType = {
   tableBookings: number
   addresses: number
   supportTickets: number
+  menuRatings: number
+  favoriteMenuItems: number
+  menuInteractions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1062,6 +1512,9 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   tableBookings?: boolean | UserCountOutputTypeCountTableBookingsArgs
   addresses?: boolean | UserCountOutputTypeCountAddressesArgs
   supportTickets?: boolean | UserCountOutputTypeCountSupportTicketsArgs
+  menuRatings?: boolean | UserCountOutputTypeCountMenuRatingsArgs
+  favoriteMenuItems?: boolean | UserCountOutputTypeCountFavoriteMenuItemsArgs
+  menuInteractions?: boolean | UserCountOutputTypeCountMenuInteractionsArgs
 }
 
 /**
@@ -1102,6 +1555,27 @@ export type UserCountOutputTypeCountSupportTicketsArgs<ExtArgs extends runtime.T
   where?: Prisma.SupportTicketWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMenuRatingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MenuRatingWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFavoriteMenuItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FavoriteMenuItemWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMenuInteractionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MenuInteractionWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1123,6 +1597,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   tableBookings?: boolean | Prisma.User$tableBookingsArgs<ExtArgs>
   addresses?: boolean | Prisma.User$addressesArgs<ExtArgs>
   supportTickets?: boolean | Prisma.User$supportTicketsArgs<ExtArgs>
+  menuRatings?: boolean | Prisma.User$menuRatingsArgs<ExtArgs>
+  favoriteMenuItems?: boolean | Prisma.User$favoriteMenuItemsArgs<ExtArgs>
+  menuInteractions?: boolean | Prisma.User$menuInteractionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1186,6 +1663,9 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   tableBookings?: boolean | Prisma.User$tableBookingsArgs<ExtArgs>
   addresses?: boolean | Prisma.User$addressesArgs<ExtArgs>
   supportTickets?: boolean | Prisma.User$supportTicketsArgs<ExtArgs>
+  menuRatings?: boolean | Prisma.User$menuRatingsArgs<ExtArgs>
+  favoriteMenuItems?: boolean | Prisma.User$favoriteMenuItemsArgs<ExtArgs>
+  menuInteractions?: boolean | Prisma.User$menuInteractionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1198,6 +1678,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     tableBookings: Prisma.$TableBookingPayload<ExtArgs>[]
     addresses: Prisma.$AddressPayload<ExtArgs>[]
     supportTickets: Prisma.$SupportTicketPayload<ExtArgs>[]
+    menuRatings: Prisma.$MenuRatingPayload<ExtArgs>[]
+    favoriteMenuItems: Prisma.$FavoriteMenuItemPayload<ExtArgs>[]
+    menuInteractions: Prisma.$MenuInteractionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1613,6 +2096,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   tableBookings<T extends Prisma.User$tableBookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tableBookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TableBookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   addresses<T extends Prisma.User$addressesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$addressesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   supportTickets<T extends Prisma.User$supportTicketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$supportTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  menuRatings<T extends Prisma.User$menuRatingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$menuRatingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MenuRatingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  favoriteMenuItems<T extends Prisma.User$favoriteMenuItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoriteMenuItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoriteMenuItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  menuInteractions<T extends Prisma.User$menuInteractionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$menuInteractionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MenuInteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2143,6 +2629,78 @@ export type User$supportTicketsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.SupportTicketScalarFieldEnum | Prisma.SupportTicketScalarFieldEnum[]
+}
+
+/**
+ * User.menuRatings
+ */
+export type User$menuRatingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MenuRating
+   */
+  select?: Prisma.MenuRatingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MenuRating
+   */
+  omit?: Prisma.MenuRatingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MenuRatingInclude<ExtArgs> | null
+  where?: Prisma.MenuRatingWhereInput
+  orderBy?: Prisma.MenuRatingOrderByWithRelationInput | Prisma.MenuRatingOrderByWithRelationInput[]
+  cursor?: Prisma.MenuRatingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MenuRatingScalarFieldEnum | Prisma.MenuRatingScalarFieldEnum[]
+}
+
+/**
+ * User.favoriteMenuItems
+ */
+export type User$favoriteMenuItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FavoriteMenuItem
+   */
+  select?: Prisma.FavoriteMenuItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FavoriteMenuItem
+   */
+  omit?: Prisma.FavoriteMenuItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FavoriteMenuItemInclude<ExtArgs> | null
+  where?: Prisma.FavoriteMenuItemWhereInput
+  orderBy?: Prisma.FavoriteMenuItemOrderByWithRelationInput | Prisma.FavoriteMenuItemOrderByWithRelationInput[]
+  cursor?: Prisma.FavoriteMenuItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FavoriteMenuItemScalarFieldEnum | Prisma.FavoriteMenuItemScalarFieldEnum[]
+}
+
+/**
+ * User.menuInteractions
+ */
+export type User$menuInteractionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MenuInteraction
+   */
+  select?: Prisma.MenuInteractionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MenuInteraction
+   */
+  omit?: Prisma.MenuInteractionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MenuInteractionInclude<ExtArgs> | null
+  where?: Prisma.MenuInteractionWhereInput
+  orderBy?: Prisma.MenuInteractionOrderByWithRelationInput | Prisma.MenuInteractionOrderByWithRelationInput[]
+  cursor?: Prisma.MenuInteractionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MenuInteractionScalarFieldEnum | Prisma.MenuInteractionScalarFieldEnum[]
 }
 
 /**
