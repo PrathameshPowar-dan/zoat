@@ -1,6 +1,6 @@
-import prisma from "../utils/prisma.js"
-import { ApiError } from "../utils/ApiError.js";
-import { OrderStatus } from "../constants/index.js";
+import prisma from "../../utils/prisma.js"
+import { ApiError } from "../../utils/ApiError.js";
+import { OrderStatus } from "../../constants/index.js";
 
 class OrderService {
     async checkout(data: {
@@ -84,9 +84,9 @@ class OrderService {
                     items: {
                         create: orderItems,
                     },
-                    statusHistory: {
+                    orderStatusHistories: {
                         create: {
-                            status: OrderStatus.PENDING,
+                            status: "PENDING",
                         },
                     },
                 },
@@ -159,7 +159,7 @@ class OrderService {
                         menuItem: true,
                     },
                 },
-                statusHistory: {
+                orderStatusHistories: {
                     orderBy: {
                         createdAt: "asc",
                     },
@@ -231,7 +231,7 @@ class OrderService {
                 },
                 data: {
                     status: nextStatus,
-                    statusHistory: {
+                    orderStatusHistories: {
                         create: {
                             status: nextStatus,
                         },
@@ -244,7 +244,7 @@ class OrderService {
                             menuItem: true,
                         },
                     },
-                    statusHistory: {
+                    orderStatusHistories: {
                         orderBy: {
                             createdAt: "asc",
                         },

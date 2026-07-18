@@ -2,7 +2,7 @@ import { type Response } from "express";
 import { asyncHandler } from "../../utils/AsyncHandler.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { type AuthRequest } from "../../middlewares/auth.middleware.js";
-import orderService from "../../services/order.service.js";
+import orderService from "../../services/order/order.service.js";
 
 export const checkout = asyncHandler(async (req: AuthRequest, res: Response) => {
     const order = await orderService.checkout({

@@ -98,6 +98,8 @@ export const UserScalarFieldEnum = {
   preferredLanguage: 'preferredLanguage',
   preferredCuisines: 'preferredCuisines',
   profilePictureUrl: 'profilePictureUrl',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { asyncHandler } from '../utils/AsyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import redis from '../config/redis.js';
+import prisma from '../utils/prisma.js';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -26,8 +27,22 @@ export const protectRoute = asyncHandler(async (req: AuthRequest, res: Response,
     }
 
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        req.user = decoded;
+        const decoded = jwt.verify(token, JWT_SECRET) as any;
+
+        const user = await prisma.user.findUnique({
+            where: { id: decoded.id },
+            select: {
+                id: true,
+                role: true,
+                isDeleted: true
+            }
+        });
+
+        if (!user || user.isDeleted) {
+            throw new ApiError(401, "Account no longer exists.");
+        }
+
+        req.user = user;
         next();
     } catch (error) {
         throw new ApiError(403, "Invalid or expired token");

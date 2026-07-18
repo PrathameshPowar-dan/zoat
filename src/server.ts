@@ -10,6 +10,7 @@ import orderRoutes from './routes/order/order.routes.js';
 import addressRoutes from './routes/user/address.routes.js';
 import menuRoutes from './routes/menu/menu.routes.js';
 import supportRoutes from './routes/support/support.routes.js';
+import profileRoutes from './routes/user/profile.routes.js';
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/restaurants', restaurantRoutes);
 app.use('/api/users/addresses', addressRoutes);
+app.use('/api/users/profile', profileRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/menu', menuRoutes);
 app.use('/api/support', supportRoutes);

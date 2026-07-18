@@ -3,6 +3,7 @@ import prisma from '../../utils/prisma.js';
 import { asyncHandler } from '../../utils/AsyncHandler.js';
 import { ApiError } from '../../utils/ApiError.js';
 import { ApiResponse } from '../../utils/ApiResponse.js';
+import restaurantService from '../../services/restaurant/restaurant.service.js';
 
 // API - Banner API (Fetches promotional background banners)
 export const getBanners = asyncHandler(async (req: Request, res: Response) => {
@@ -26,7 +27,7 @@ export const getCategories = asyncHandler(async (req: Request, res: Response) =>
 export const getRestaurantList = asyncHandler(async (req: Request, res: Response) => {
     const restaurants = await prisma.restaurant.findMany({
         select: {
-            id: true, name: true, rating: true, imageUrl: true, 
+            id: true, name: true, rating: true, imageUrl: true,
             cuisines: true, costForTwo: true, isPureVeg: true, address: true,
             supportsDineIn: true, dineInCapacity: true
         }
@@ -94,7 +95,7 @@ export const getNearbyRestaurants = asyncHandler(async (req: Request, res: Respo
 
 // API - Search Restaurants API
 export const searchRestaurants = asyncHandler(async (req: Request, res: Response) => {
-    const { restaurantName } = req.query; 
+    const { restaurantName } = req.query;
 
     if (!restaurantName) {
         res.status(200).json(new ApiResponse(200, [], "Please provide a search term (restaurantName)"));
@@ -116,43 +117,188 @@ export const searchRestaurants = asyncHandler(async (req: Request, res: Response
 
 // API - Advanced Filters API
 export const filterRestaurants = asyncHandler(async (req: Request, res: Response) => {
-    const { isPureVeg, maxCost, cuisines, minRating, search } = req.query;
+    const {
+        search,
+        cuisines,
+        minRating,
+        maxCost,
+        isPureVeg,
+        supportsDineIn,
+        categoryId,
+        minPrice,
+        maxPrice,
+        sortBy,
+        page = "1",
+        limit = "10"
+    } = req.query;
 
-    const filterConditions: any = {};
-    let menuItemsFilter: any = { take: 3 }; // show 3 items preview
+    const where: any = {};
 
-    // Apply specific filters if they exist in the query parameters
-    if (isPureVeg === 'true') filterConditions.isPureVeg = true;
-    if (maxCost) filterConditions.costForTwo = { lte: parseInt(maxCost as string) };
-    if (minRating) filterConditions.rating = { gte: parseFloat(minRating as string) };
-    
-    if (cuisines) {
-        // e.g., ?cuisines=Chinese,Italian
-        const cuisineList = (cuisines as string).split(',');
-        filterConditions.cuisines = { hasSome: cuisineList };
+    // Restaurant Filters
+    if (isPureVeg === "true") {
+        where.isPureVeg = true;
     }
-    
-    // Allow searching by Restaurant Name OR Menu Item Name
-    if (search) {
-        const searchTerm = search as string;
-        filterConditions.OR = [
-            { name: { contains: searchTerm, mode: 'insensitive' } },
-            { menuItems: { some: { name: { contains: searchTerm, mode: 'insensitive' } } } }
-        ];
 
-        // If there is a search term, explicitly return the menu items that match it
-        menuItemsFilter = {
-            where: { name: { contains: searchTerm, mode: 'insensitive' } },
-            take: 10
+    if (supportsDineIn === "true") {
+        where.supportsDineIn = true;
+    }
+
+    if (minRating) {
+        where.rating = {
+            gte: Number(minRating)
         };
     }
 
+    if (maxCost) {
+        where.costForTwo = {
+            lte: Number(maxCost)
+        };
+    }
+
+    if (cuisines) {
+        where.cuisines = {
+            hasSome: (cuisines as string).split(",")
+        };
+    }
+
+    // Search Restaurant Name OR Menu Item Name
+    if (search) {
+        where.OR = [
+            {
+                name: {
+                    contains: String(search),
+                    mode: "insensitive"
+                }
+            },
+            {
+                menuItems: {
+                    some: {
+                        name: {
+                            contains: String(search),
+                            mode: "insensitive"
+                        }
+                    }
+                }
+            }
+        ];
+    }
+
+    // Menu Filters
+    if (categoryId || minPrice || maxPrice) {
+        where.menuItems = {
+            some: {
+                ...(categoryId && {
+                    categoryId: String(categoryId)
+                }),
+
+                ...(minPrice || maxPrice
+                    ? {
+                        price: {
+                            ...(minPrice && {
+                                gte: Number(minPrice)
+                            }),
+                            ...(maxPrice && {
+                                lte: Number(maxPrice)
+                            })
+                        }
+                    }
+                    : {})
+            }
+        };
+    }
+
+    const orderBy: any = {};
+
+    switch (sortBy) {
+        case "rating":
+            orderBy.rating = "desc";
+            break;
+
+        case "cost_low":
+            orderBy.costForTwo = "asc";
+            break;
+
+        case "cost_high":
+            orderBy.costForTwo = "desc";
+            break;
+
+        case "newest":
+            orderBy.createdAt = "desc";
+            break;
+
+        case "name":
+            orderBy.name = "asc";
+            break;
+
+        default:
+            orderBy.rating = "desc";
+    }
+
     const restaurants = await prisma.restaurant.findMany({
-        where: filterConditions,
-        include: { 
-            menuItems: menuItemsFilter 
-        },
+        where,
+        orderBy,
+        skip: (Number(page) - 1) * Number(limit),
+        take: Number(limit),
+        include: {
+            menuItems: {
+                where: {
+                    isAvailable: true,
+                    ...(categoryId && {
+                        categoryId: String(categoryId)
+                    }),
+                    ...(search && {
+                        name: {
+                            contains: String(search),
+                            mode: "insensitive"
+                        }
+                    }),
+                    ...(minPrice || maxPrice
+                        ? {
+                            price: {
+                                ...(minPrice && {
+                                    gte: Number(minPrice)
+                                }),
+                                ...(maxPrice && {
+                                    lte: Number(maxPrice)
+                                })
+                            }
+                        }
+                        : {})
+                },
+                take: 5
+            }
+        }
     });
 
-    res.status(200).json(new ApiResponse(200, restaurants, "Filtered restaurants fetched"));
+    const total = await prisma.restaurant.count({
+        where
+    });
+
+    res.status(200).json(
+        new ApiResponse(
+            200,
+            {
+                total,
+                page: Number(page),
+                limit: Number(limit),
+                restaurants
+            },
+            "Filtered restaurants fetched successfully."
+        )
+    );
+});
+
+// API - Restaurants Menu API
+export const getRestaurantMenu = asyncHandler(async (req, res: Response) => {
+    const menu = await restaurantService.getRestaurantMenu(
+        req.params.restaurantId as string
+    );
+
+    res.status(200).json(
+        new ApiResponse(
+            200,
+            menu,
+            "Restaurant menu fetched successfully."
+        )
+    );
 });

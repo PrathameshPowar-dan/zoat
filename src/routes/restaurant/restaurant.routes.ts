@@ -7,7 +7,8 @@ import {
     getRestaurantDetail,
     getNearbyRestaurants,
     searchRestaurants,
-    filterRestaurants
+    filterRestaurants,
+    getRestaurantMenu
 } from '../../controllers/restaurant/restaurant.controller.js';
 import {
     createTableBooking,
@@ -36,5 +37,8 @@ router.get('/filter', filterRestaurants);
 router.get('/dine-in/list', getDineInRestaurants);
 router.post('/dine-in/bookings', protectRoute, createTableBooking);
 router.get('/dine-in/bookings/me', protectRoute, getMyTableBookings);
+
+// Menu API for a specific restaurant
+router.get("/:restaurantId/menu", getRestaurantMenu);
 
 export default router;

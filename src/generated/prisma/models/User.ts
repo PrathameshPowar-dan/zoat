@@ -37,6 +37,8 @@ export type UserMinAggregateOutputType = {
   dateOfBirth: Date | null
   preferredLanguage: string | null
   profilePictureUrl: string | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +56,8 @@ export type UserMaxAggregateOutputType = {
   dateOfBirth: Date | null
   preferredLanguage: string | null
   profilePictureUrl: string | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -72,6 +76,8 @@ export type UserCountAggregateOutputType = {
   preferredLanguage: number
   preferredCuisines: number
   profilePictureUrl: number
+  isDeleted: number
+  deletedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -91,6 +97,8 @@ export type UserMinAggregateInputType = {
   dateOfBirth?: true
   preferredLanguage?: true
   profilePictureUrl?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -108,6 +116,8 @@ export type UserMaxAggregateInputType = {
   dateOfBirth?: true
   preferredLanguage?: true
   profilePictureUrl?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -126,6 +136,8 @@ export type UserCountAggregateInputType = {
   preferredLanguage?: true
   preferredCuisines?: true
   profilePictureUrl?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -217,6 +229,8 @@ export type UserGroupByOutputType = {
   preferredLanguage: string | null
   preferredCuisines: string[]
   profilePictureUrl: string | null
+  isDeleted: boolean
+  deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -256,6 +270,8 @@ export type UserWhereInput = {
   preferredLanguage?: Prisma.StringNullableFilter<"User"> | string | null
   preferredCuisines?: Prisma.StringNullableListFilter<"User">
   profilePictureUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  isDeleted?: Prisma.BoolFilter<"User"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   orders?: Prisma.OrderListRelationFilter
@@ -281,6 +297,8 @@ export type UserOrderByWithRelationInput = {
   preferredLanguage?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredCuisines?: Prisma.SortOrder
   profilePictureUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   orders?: Prisma.OrderOrderByRelationAggregateInput
@@ -309,6 +327,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   preferredLanguage?: Prisma.StringNullableFilter<"User"> | string | null
   preferredCuisines?: Prisma.StringNullableListFilter<"User">
   profilePictureUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  isDeleted?: Prisma.BoolFilter<"User"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   orders?: Prisma.OrderListRelationFilter
@@ -334,6 +354,8 @@ export type UserOrderByWithAggregationInput = {
   preferredLanguage?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredCuisines?: Prisma.SortOrder
   profilePictureUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -358,6 +380,8 @@ export type UserScalarWhereWithAggregatesInput = {
   preferredLanguage?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   preferredCuisines?: Prisma.StringNullableListFilter<"User">
   profilePictureUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  isDeleted?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -376,6 +400,8 @@ export type UserCreateInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -401,6 +427,8 @@ export type UserUncheckedCreateInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
@@ -426,6 +454,8 @@ export type UserUpdateInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -451,6 +481,8 @@ export type UserUncheckedUpdateInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
@@ -476,6 +508,8 @@ export type UserCreateManyInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -494,6 +528,8 @@ export type UserUpdateManyMutationInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -512,6 +548,8 @@ export type UserUncheckedUpdateManyInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -538,6 +576,8 @@ export type UserCountOrderByAggregateInput = {
   preferredLanguage?: Prisma.SortOrder
   preferredCuisines?: Prisma.SortOrder
   profilePictureUrl?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -555,6 +595,8 @@ export type UserMaxOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   profilePictureUrl?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -572,6 +614,8 @@ export type UserMinOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   profilePictureUrl?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -604,6 +648,10 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 export type UserUpdatepreferredCuisinesInput = {
   set?: string[]
   push?: string | string[]
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -722,6 +770,8 @@ export type UserCreateWithoutAddressesInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -746,6 +796,8 @@ export type UserUncheckedCreateWithoutAddressesInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
@@ -786,6 +838,8 @@ export type UserUpdateWithoutAddressesInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -810,6 +864,8 @@ export type UserUncheckedUpdateWithoutAddressesInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
@@ -834,6 +890,8 @@ export type UserCreateWithoutOrdersInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   tableBookings?: Prisma.TableBookingCreateNestedManyWithoutUserInput
@@ -858,6 +916,8 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   tableBookings?: Prisma.TableBookingUncheckedCreateNestedManyWithoutUserInput
@@ -898,6 +958,8 @@ export type UserUpdateWithoutOrdersInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tableBookings?: Prisma.TableBookingUpdateManyWithoutUserNestedInput
@@ -922,6 +984,8 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tableBookings?: Prisma.TableBookingUncheckedUpdateManyWithoutUserNestedInput
@@ -946,6 +1010,8 @@ export type UserCreateWithoutTableBookingsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -970,6 +1036,8 @@ export type UserUncheckedCreateWithoutTableBookingsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
@@ -1010,6 +1078,8 @@ export type UserUpdateWithoutTableBookingsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1034,6 +1104,8 @@ export type UserUncheckedUpdateWithoutTableBookingsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
@@ -1058,6 +1130,8 @@ export type UserCreateWithoutSupportTicketsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -1082,6 +1156,8 @@ export type UserUncheckedCreateWithoutSupportTicketsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
@@ -1122,6 +1198,8 @@ export type UserUpdateWithoutSupportTicketsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1146,6 +1224,8 @@ export type UserUncheckedUpdateWithoutSupportTicketsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
@@ -1170,6 +1250,8 @@ export type UserCreateWithoutFavoriteMenuItemsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -1194,6 +1276,8 @@ export type UserUncheckedCreateWithoutFavoriteMenuItemsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
@@ -1234,6 +1318,8 @@ export type UserUpdateWithoutFavoriteMenuItemsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1258,6 +1344,8 @@ export type UserUncheckedUpdateWithoutFavoriteMenuItemsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
@@ -1282,6 +1370,8 @@ export type UserCreateWithoutMenuInteractionsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -1306,6 +1396,8 @@ export type UserUncheckedCreateWithoutMenuInteractionsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
@@ -1346,6 +1438,8 @@ export type UserUpdateWithoutMenuInteractionsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1370,6 +1464,8 @@ export type UserUncheckedUpdateWithoutMenuInteractionsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
@@ -1394,6 +1490,8 @@ export type UserCreateWithoutMenuRatingsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
@@ -1418,6 +1516,8 @@ export type UserUncheckedCreateWithoutMenuRatingsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
@@ -1458,6 +1558,8 @@ export type UserUpdateWithoutMenuRatingsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
@@ -1482,6 +1584,8 @@ export type UserUncheckedUpdateWithoutMenuRatingsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
@@ -1591,6 +1695,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   preferredLanguage?: boolean
   preferredCuisines?: boolean
   profilePictureUrl?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
@@ -1617,6 +1723,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   preferredLanguage?: boolean
   preferredCuisines?: boolean
   profilePictureUrl?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1635,6 +1743,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   preferredLanguage?: boolean
   preferredCuisines?: boolean
   profilePictureUrl?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1653,11 +1763,13 @@ export type UserSelectScalar = {
   preferredLanguage?: boolean
   preferredCuisines?: boolean
   profilePictureUrl?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firebaseUid" | "password" | "name" | "phone" | "email" | "role" | "address" | "gender" | "dateOfBirth" | "preferredLanguage" | "preferredCuisines" | "profilePictureUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firebaseUid" | "password" | "name" | "phone" | "email" | "role" | "address" | "gender" | "dateOfBirth" | "preferredLanguage" | "preferredCuisines" | "profilePictureUrl" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   tableBookings?: boolean | Prisma.User$tableBookingsArgs<ExtArgs>
@@ -1696,6 +1808,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     preferredLanguage: string | null
     preferredCuisines: string[]
     profilePictureUrl: string | null
+    isDeleted: boolean
+    deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -2141,6 +2255,8 @@ export interface UserFieldRefs {
   readonly preferredLanguage: Prisma.FieldRef<"User", 'String'>
   readonly preferredCuisines: Prisma.FieldRef<"User", 'String[]'>
   readonly profilePictureUrl: Prisma.FieldRef<"User", 'String'>
+  readonly isDeleted: Prisma.FieldRef<"User", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }

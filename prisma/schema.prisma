@@ -50,6 +50,8 @@ model User {
   addresses         Address[]
   supportTickets    SupportTicket[]
   menuRatings       MenuRating[]
+  isDeleted         Boolean  @default(false)
+  deletedAt         DateTime?
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
   favoriteMenuItems FavoriteMenuItem[]
