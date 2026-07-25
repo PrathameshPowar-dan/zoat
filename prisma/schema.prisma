@@ -61,6 +61,10 @@ model User {
 model Address {
   id        String   @id @default(uuid())
   user      User     @relation(fields: [userId], references: [id])
+  label     String @default("Home")   // e.g., "Home", "Work"
+  phone     String?
+  receiverName String?
+  landmark  String?
   userId    String
   street    String
   city      String

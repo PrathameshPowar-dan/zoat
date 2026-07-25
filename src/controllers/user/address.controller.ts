@@ -6,10 +6,10 @@ import { ApiResponse } from '../../utils/ApiResponse.js';
 import { type AuthRequest } from '../../middlewares/auth.middleware.js';
 
 export const addAddress = asyncHandler(async (req: AuthRequest, res: Response) => {
-    const { street, city, state, zipCode, lat, lng, isDefault } = req.body;
+    const { street, label, phone, receiverName, landmark, city, state, zipCode, lat, lng, isDefault } = req.body;
     const userId = req.user.id;
 
-    if (!street || !city || !state || !zipCode) {
+    if (!street || !city || !state || !zipCode || !phone || !receiverName) {
         throw new ApiError(400, "Incomplete address details provided.");
     }
 
@@ -22,7 +22,7 @@ export const addAddress = asyncHandler(async (req: AuthRequest, res: Response) =
     }
 
     const address = await prisma.address.create({
-        data: { userId, street, city, state, zipCode, lat, lng, isDefault: isDefault || false }
+        data: { userId, street, label, phone, receiverName, landmark, city, state, zipCode, lat, lng, isDefault: isDefault || false }
     });
 
     res.status(201).json(new ApiResponse(201, address, "Address added successfully"));
