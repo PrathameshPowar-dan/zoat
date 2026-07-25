@@ -22,6 +22,7 @@ export const protectRoute = asyncHandler(async (req: AuthRequest, res: Response,
 
     // Check if the token was blacklisted due to a logout
     const isBlacklisted = await redis.get(`blacklist_${token}`);
+    // console.log("Token:", token, "Is Blacklisted:", isBlacklisted); // Debugging line
     if (isBlacklisted) {
         throw new ApiError(401, "Session expired. Please log in again.");
     }

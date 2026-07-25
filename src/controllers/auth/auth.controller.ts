@@ -177,7 +177,14 @@ export const verifyOtp = asyncHandler(async (req: Request, res: Response) => {
             );
         }
 
-        throw new ApiError(401, 'Invalid or expired OTP.');
+        // throw new ApiError(401, 'Invalid or expired OTP.');
+        return res.status(401).json(
+            new ApiResponse(
+                401,
+                { remainingAttempts: OTP_VERIFY_ATTEMPT_LIMIT - failedAttempts },
+                'Invalid or expired OTP.'
+            )
+        );
     }
 
     if (!isDevBypass) {
