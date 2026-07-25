@@ -20,7 +20,8 @@ export const updateProfile = asyncHandler(async (req: AuthRequest, res: Response
         dateOfBirth,
         preferredLanguage,
         preferredCuisines,
-        profilePictureUrl
+        profilePictureUrl,
+        email,
     } = req.body;
 
     const updatedUser = await prisma.user.update({
@@ -39,7 +40,8 @@ export const updateProfile = asyncHandler(async (req: AuthRequest, res: Response
             }),
             ...(profilePictureUrl !== undefined && {
                 profilePictureUrl
-            })
+            }),
+            ...(email !== undefined && { email: email.trim() })
         },
         select: {
             id: true,
