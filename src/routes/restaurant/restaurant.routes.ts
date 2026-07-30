@@ -8,7 +8,8 @@ import {
     getNearbyRestaurants,
     searchRestaurants,
     filterRestaurants,
-    getRestaurantMenu
+    getRestaurantMenu,
+    getCategoryWiseRestaurants
 } from '../../controllers/restaurant/restaurant.controller.js';
 import {
     createTableBooking,
@@ -22,6 +23,7 @@ const router = Router();
 // Endpoints exactly requested by your friend
 router.get('/banners', getBanners);
 router.get('/categories', getCategories);
+router.get('/categories/:id', getCategoryWiseRestaurants);
 router.get('/list', getRestaurantList);
 router.get('/top-rated', getTopRated);
 router.get('/detail/:id', getRestaurantDetail); 

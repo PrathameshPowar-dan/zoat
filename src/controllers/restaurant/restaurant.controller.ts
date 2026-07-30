@@ -302,3 +302,24 @@ export const getRestaurantMenu = asyncHandler(async (req, res: Response) => {
         )
     );
 });
+
+// API - Category Wise Restaurants API
+export const getCategoryWiseRestaurants = asyncHandler(async (req, res: Response) => {
+    const { id } = req.params;
+
+    const restaurants = await prisma.restaurant.findMany({
+        where: {
+            cuisines: {
+                
+            }
+        }
+    });
+
+    res.status(200).json(
+        new ApiResponse(
+            200,
+            restaurants,
+            "Restaurants for the specified category fetched successfully."
+        )
+    );
+});
