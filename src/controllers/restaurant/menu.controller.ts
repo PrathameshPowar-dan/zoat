@@ -5,6 +5,8 @@ import { asyncHandler } from '../../utils/AsyncHandler.js';
 import { ApiError } from '../../utils/ApiError.js';
 import { ApiResponse } from '../../utils/ApiResponse.js'; // Import prisma namespace for type inference
 
+
+// API - Recommended Food API
 export const getRecommendedFood = asyncHandler(async (req: Request, res: Response) => {
     const { restaurantId, categoryId, limit = 10 } = req.query;
 
@@ -15,7 +17,7 @@ export const getRecommendedFood = asyncHandler(async (req: Request, res: Respons
             ...(categoryId && { categoryId: String(categoryId) })
         },
         orderBy: [
-            { rating: "desc" },
+            // MenuItem does not have a 'rating' field. Ordering by createdAt for now.
             { createdAt: "desc" }
         ],
         take: Number(limit),
@@ -35,6 +37,38 @@ export const getRecommendedFood = asyncHandler(async (req: Request, res: Respons
             200,
             menuItems,
             "Recommended food fetched successfully"
+        )
+    );
+});
+
+// API - Veg Menu API
+export const getVegMenu = asyncHandler(async (req: Request, res: Response) => {
+    const { restaurantId, limit = 10 } = req.query;
+    const menuItems = await prisma.menuItem.findMany({
+        where: {
+            isAvailable: true,
+            isVeg: true,
+            ...(restaurantId && { restaurantId: String(restaurantId) })
+        },
+        orderBy: [
+            // MenuItem does not have a 'rating' field.
+        ],
+        take: Number(limit),
+        include: {
+            restaurant: {
+                select: {
+                    id: true,
+                    name: true,
+                    imageUrl: true
+                }
+            }
+        }
+    });
+    res.status(200).json(
+        new ApiResponse(
+            200,
+            menuItems,
+            "Veg menu fetched successfully"
         )
     );
 });
