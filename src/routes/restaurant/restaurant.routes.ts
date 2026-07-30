@@ -9,7 +9,8 @@ import {
     searchRestaurants,
     filterRestaurants,
     getRestaurantMenu,
-    getCategoryWiseRestaurants
+    getCategoryWiseRestaurants,
+    getPureVegRestaurants
 } from '../../controllers/restaurant/restaurant.controller.js';
 import {
     createTableBooking,
@@ -24,6 +25,7 @@ const router = Router();
 router.get('/banners', getBanners);
 router.get('/categories', getCategories);
 router.get('/categories/:id', getCategoryWiseRestaurants);
+router.get('/list/veg', getPureVegRestaurants);
 router.get('/list', getRestaurantList);
 router.get('/top-rated', getTopRated);
 router.get('/detail/:id', getRestaurantDetail); 

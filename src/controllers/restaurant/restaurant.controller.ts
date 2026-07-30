@@ -124,13 +124,16 @@ export const filterRestaurants = asyncHandler(async (req: Request, res: Response
         maxCost,
         isPureVeg,
         supportsDineIn,
-        categoryId,
+        categoryId: rawCategoryId, // Rename to avoid conflict and clarify
         minPrice,
         maxPrice,
         sortBy,
         page = "1",
         limit = "10"
     } = req.query;
+
+    // Ensure categoryId is a single string or undefined, as expected by Prisma's categoryId field
+    const categoryId = Array.isArray(rawCategoryId) ? rawCategoryId[0] : rawCategoryId;
 
     const where: any = {};
 
@@ -187,7 +190,7 @@ export const filterRestaurants = asyncHandler(async (req: Request, res: Response
     if (categoryId || minPrice || maxPrice) {
         where.menuItems = {
             some: {
-                ...(categoryId && {
+                ...(categoryId && { // Use the processed categoryId
                     categoryId: String(categoryId)
                 }),
 
@@ -243,7 +246,7 @@ export const filterRestaurants = asyncHandler(async (req: Request, res: Response
             menuItems: {
                 where: {
                     isAvailable: true,
-                    ...(categoryId && {
+                    ...(categoryId && { // Use the processed categoryId
                         categoryId: String(categoryId)
                     }),
                     ...(search && {
@@ -304,15 +307,22 @@ export const getRestaurantMenu = asyncHandler(async (req, res: Response) => {
 });
 
 // API - Category Wise Restaurants API
-export const getCategoryWiseRestaurants = asyncHandler(async (req, res: Response) => {
+export const getCategoryWiseRestaurants = asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
+
+    const category = await prisma.category.findUnique({
+        where: { id: id as string },
+        select: { name: true }
+    });
+
+    if (!category) {
+        throw new ApiError(404, "Category not found");
+    }
 
     const restaurants = await prisma.restaurant.findMany({
         where: {
-            cuisines: {
-                
-            }
-        }
+            cuisines: { has: category.name },
+        },
     });
 
     res.status(200).json(
@@ -322,4 +332,17 @@ export const getCategoryWiseRestaurants = asyncHandler(async (req, res: Response
             "Restaurants for the specified category fetched successfully."
         )
     );
+});
+
+// API - Pure Veg Restaurants API
+export const getPureVegRestaurants = asyncHandler(async (req: Request, res: Response) => {
+    const restaurants = await prisma.restaurant.findMany({
+        where: { isPureVeg: true },
+        select: {
+            id: true, name: true, rating: true, imageUrl: true,
+            cuisines: true, costForTwo: true, address: true
+        }
+    });
+
+    res.status(200).json(new ApiResponse(200, restaurants, "Pure Veg restaurants fetched successfully"));
 });
