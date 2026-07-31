@@ -22,30 +22,24 @@ export const protectRoute = asyncHandler(async (req: AuthRequest, res: Response,
 
     // Check if the token was blacklisted due to a logout
     const isBlacklisted = await redis.get(`blacklist_${token}`);
-    // console.log("Token:", token, "Is Blacklisted:", isBlacklisted); // Debugging line
+    console.log("Token:", token, "Is Blacklisted:", isBlacklisted); // Debugging line
     if (isBlacklisted) {
         throw new ApiError(401, "Session expired. Please log in again.");
     }
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET) as any;
+        console.log(decoded);
 
         const user = await prisma.user.findUnique({
-            where: { id: decoded.id },
-            select: {
-                id: true,
-                role: true,
-                isDeleted: true
-            }
+            where: { id: decoded.id }
         });
-
-        if (!user || user.isDeleted) {
-            throw new ApiError(401, "Account no longer exists.");
-        }
 
         req.user = user;
         next();
-    } catch (error) {
-        throw new ApiError(403, "Invalid or expired token");
+    } catch (error: any) {
+        console.error("JWT Error:", error.name);
+        console.error("JWT Message:", error.message);
+        throw error;
     }
 });

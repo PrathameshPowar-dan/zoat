@@ -78,6 +78,11 @@ export type SupportTicket = Prisma.SupportTicketModel
  */
 export type FavoriteMenuItem = Prisma.FavoriteMenuItemModel
 /**
+ * Model FavoriteRestaurant
+ * 
+ */
+export type FavoriteRestaurant = Prisma.FavoriteRestaurantModel
+/**
  * Model MenuInteraction
  * 
  */

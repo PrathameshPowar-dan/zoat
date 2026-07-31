@@ -76,7 +76,9 @@ export const getProfile = asyncHandler(async (req: AuthRequest, res: Response) =
             preferredLanguage: true,
             preferredCuisines: true,
             profilePictureUrl: true,
-            createdAt: true
+            createdAt: true,
+            favoriteRestaurants: true,
+            favoriteMenuItems: true
         }
     });
 

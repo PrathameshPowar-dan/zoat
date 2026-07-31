@@ -63,6 +63,7 @@ export const ModelName = {
   TableBooking: 'TableBooking',
   SupportTicket: 'SupportTicket',
   FavoriteMenuItem: 'FavoriteMenuItem',
+  FavoriteRestaurant: 'FavoriteRestaurant',
   MenuInteraction: 'MenuInteraction',
   MenuRating: 'MenuRating',
   OrderStatusHistory: 'OrderStatusHistory'
@@ -268,6 +269,16 @@ export const FavoriteMenuItemScalarFieldEnum = {
 } as const
 
 export type FavoriteMenuItemScalarFieldEnum = (typeof FavoriteMenuItemScalarFieldEnum)[keyof typeof FavoriteMenuItemScalarFieldEnum]
+
+
+export const FavoriteRestaurantScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  restaurantId: 'restaurantId',
+  createdAt: 'createdAt'
+} as const
+
+export type FavoriteRestaurantScalarFieldEnum = (typeof FavoriteRestaurantScalarFieldEnum)[keyof typeof FavoriteRestaurantScalarFieldEnum]
 
 
 export const MenuInteractionScalarFieldEnum = {
