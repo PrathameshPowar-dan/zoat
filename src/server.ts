@@ -12,6 +12,7 @@ import menuRoutes from './routes/menu/menu.routes.js';
 import supportRoutes from './routes/support/support.routes.js';
 import profileRoutes from './routes/user/profile.routes.js';
 import favRoutes from './routes/user/favorite.routes.js';
+import privacyRoutes from './routes/support/privacy.routes.js';
 
 dotenv.config();
 
@@ -38,6 +39,7 @@ app.use('/api/users/favorite', favRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/menu', menuRoutes);
 app.use('/api/support', supportRoutes);
+app.use('/api/', privacyRoutes);
 
 app.get('/api/health', async (req: Request, res: Response) => {
     try {
