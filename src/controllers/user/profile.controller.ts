@@ -30,7 +30,17 @@ export const updateProfile = asyncHandler(async (req: AuthRequest, res: Response
             ...(name !== undefined && { name: name.trim() }),
             ...(gender !== undefined && { gender }),
             ...(dateOfBirth !== undefined && {
-                dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : null
+                dateOfBirth: dateOfBirth
+                    ? (() => {
+                        const [day, month, year] = dateOfBirth.split("/");
+
+                        return new Date(
+                            Number(year),
+                            Number(month) - 1,
+                            Number(day)
+                        );
+                    })()
+                    : null
             }),
             ...(preferredLanguage !== undefined && {
                 preferredLanguage
