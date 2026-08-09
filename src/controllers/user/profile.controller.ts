@@ -82,8 +82,19 @@ export const getProfile = asyncHandler(async (req: AuthRequest, res: Response) =
         }
     });
 
+    const formattedProfile = profile
+        ? {
+            ...profile,
+            dateOfBirth: profile.dateOfBirth
+                ? `${String(profile.dateOfBirth.getDate()).padStart(2, "0")}/${String(
+                    profile.dateOfBirth.getMonth() + 1
+                ).padStart(2, "0")}/${profile.dateOfBirth.getFullYear()}`
+                : null
+        }
+        : null;
+
     res.status(200).json(
-        new ApiResponse(200, profile, "Profile fetched successfully")
+        new ApiResponse(200, formattedProfile, "Profile fetched successfully")
     );
 });
 
