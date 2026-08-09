@@ -6,112 +6,115 @@ class OrderService {
     async checkout(data: {
         userId: string;
         restaurantId: string;
-        addressId: string;
+        addressId?: string;
+        orderType?: 'DELIVERY' | 'TAKEAWAY';
+        tipAmount?: number;
         items: {
             menuItemId: string;
             quantity: number;
         }[];
     }) {
-        const { userId, restaurantId, addressId, items } = data;
+        // Set defaults if the frontend forgets to send them
+        const { userId, restaurantId, addressId, items, orderType = 'DELIVERY', tipAmount = 0 } = data;
 
-        if (!restaurantId || !items?.length || !addressId) {
-            throw new ApiError(
-                400,
-                "Restaurant ID, items, and delivery address are required."
-            );
+        if (!restaurantId || !items?.length) {
+            throw new ApiError(400, "Restaurant ID and items are required.");
         }
 
+        // Using a transaction ensures that if anything fails, NO partial data is saved
         return prisma.$transaction(async (tx) => {
-            const address = await tx.address.findUnique({
-                where: {
-                    id: addressId,
-                    userId,
-                },
+            // Fetch the restaurant early to ensure it exists AND to get its name for Takeaway
+            const restaurant = await tx.restaurant.findUnique({
+                where: { id: restaurantId },
+                select: { name: true }
             });
 
-            if (!address) {
-                throw new ApiError(404, "Invalid delivery address.");
+            if (!restaurant) {
+                throw new ApiError(404, "Restaurant not found.");
             }
 
-            const deliveryAddress = `${address.street}, ${address.city}, ${address.state} ${address.zipCode}`;
+            // Set Address Logic based on Order Type
+            let deliveryAddressStr = null;
 
+            if (orderType === 'DELIVERY') {
+                if (!addressId) {
+                    throw new ApiError(400, "Delivery address is required for DELIVERY orders.");
+                }
+
+                // FIX: Changed findUnique to findFirst
+                const address = await tx.address.findFirst({
+                    where: { id: addressId, userId },
+                });
+
+                if (!address) {
+                    throw new ApiError(404, "Invalid delivery address.");
+                }
+
+                deliveryAddressStr = `${address.street}, ${address.city}, ${address.state} ${address.zipCode}`;
+            } else if (orderType === 'TAKEAWAY') {
+                deliveryAddressStr = `Self-Pickup from ${restaurant.name}`;
+            }
+
+            // Price Calculation
             const menuItemIds = items.map((i) => i.menuItemId);
 
             const validMenuItems = await tx.menuItem.findMany({
                 where: {
-                    id: {
-                        in: menuItemIds,
-                    },
+                    id: { in: menuItemIds },
                     restaurantId,
-                    isAvailable: true,
-                },
+                    isAvailable: true
+                }
             });
 
             if (validMenuItems.length !== items.length) {
-                throw new ApiError(
-                    400,
-                    "Some items are unavailable or belong to another restaurant."
-                );
+                throw new ApiError(400, "Some items in your cart are unavailable.");
             }
 
-            let totalAmount = 0;
+            // Calculate just the food cost
+            let foodTotal = 0;
+            const orderItemsData = items.map((cartItem) => {
+                const dbItem = validMenuItems.find(item => item.id === cartItem.menuItemId);
+                const price = dbItem?.price || 0;
 
-            const orderItems = items.map((cartItem) => {
-                const dbItem = validMenuItems.find(
-                    (i) => i.id === cartItem.menuItemId
-                );
-
-                if (!dbItem) {
-                    throw new ApiError(400, "Invalid menu item.");
-                }
-
-                totalAmount += dbItem.price * cartItem.quantity;
+                foodTotal += (price * cartItem.quantity);
 
                 return {
-                    menuItemId: dbItem.id,
+                    menuItemId: cartItem.menuItemId,
                     quantity: cartItem.quantity,
-                    priceAtTimeOfOrder: dbItem.price,
+                    priceAtTimeOfOrder: price
                 };
             });
 
-            const order = await tx.order.create({
+            // Determine Delivery Fee
+            // If they pick it up themselves, fee is 0. If we deliver, standard ₹40 fee.
+            const deliveryFee = orderType === 'DELIVERY' ? 40 : 0;
+
+            //Calculate the Grand Total
+            const finalTotalAmount = foodTotal + deliveryFee + tipAmount;
+
+            // Create the Order with the new Financial Breakdown
+            const newOrder = await tx.order.create({
                 data: {
                     userId,
                     restaurantId,
-                    deliveryAddress,
-                    totalAmount,
-                    status: OrderStatus.PENDING,
+                    orderType,
+                    deliveryAddress: deliveryAddressStr,
+                    itemTotal: foodTotal,          // <-- Saves food cost 
+                    deliveryFee: deliveryFee,      // <-- Saves delivery fee
+                    tipAmount: tipAmount,          // <-- Saves rider tip separately!
+                    totalAmount: finalTotalAmount, // <-- Grand total
+                    status: 'PENDING',
                     items: {
-                        create: orderItems,
-                    },
-                    orderStatusHistories: {
-                        create: {
-                            status: "PENDING",
-                        },
-                    },
+                        create: orderItemsData
+                    }
                 },
                 include: {
-                    restaurant: {
-                        select: {
-                            name: true,
-                            imageUrl: true,
-                        },
-                    },
-                    items: {
-                        include: {
-                            menuItem: {
-                                select: {
-                                    id: true,
-                                    name: true,
-                                    imageUrl: true,
-                                },
-                            },
-                        },
-                    },
-                },
+                    items: { include: { menuItem: { select: { name: true, imageUrl: true } } } },
+                    restaurant: { select: { name: true, imageUrl: true, address: true } }
+                }
             });
 
-            return order;
+            return newOrder;
         });
     }
 
@@ -159,7 +162,7 @@ class OrderService {
                         menuItem: true,
                     },
                 },
-                orderStatusHistories: {
+                statusHistory: {
                     orderBy: {
                         createdAt: "asc",
                     },
@@ -186,8 +189,8 @@ class OrderService {
                 user: {
                     select: {
                         id: true,
-                        fullName: true,
-                        phoneNumber: true,
+                        name: true,
+                        phone: true,
                     },
                 },
                 items: {
@@ -231,7 +234,7 @@ class OrderService {
                 },
                 data: {
                     status: nextStatus,
-                    orderStatusHistories: {
+                    statusHistory: {
                         create: {
                             status: nextStatus,
                         },
@@ -244,7 +247,7 @@ class OrderService {
                             menuItem: true,
                         },
                     },
-                    orderStatusHistories: {
+                    statusHistory: {
                         orderBy: {
                             createdAt: "asc",
                         },

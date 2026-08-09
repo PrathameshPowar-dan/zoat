@@ -42,6 +42,14 @@ export const TableBookingStatus = {
 export type TableBookingStatus = (typeof TableBookingStatus)[keyof typeof TableBookingStatus]
 
 
+export const OrderType = {
+  DELIVERY: 'DELIVERY',
+  TAKEAWAY: 'TAKEAWAY'
+} as const
+
+export type OrderType = (typeof OrderType)[keyof typeof OrderType]
+
+
 export const SupportTicketStatus = {
   OPEN: 'OPEN',
   IN_PROGRESS: 'IN_PROGRESS',

@@ -9,6 +9,8 @@ export const checkout = asyncHandler(async (req: AuthRequest, res: Response) => 
         userId: req.user.id,
         restaurantId: req.body.restaurantId,
         addressId: req.body.addressId,
+        orderType: req.body.orderType,
+        tipAmount: req.body.tipAmount,
         items: req.body.items,
     });
 

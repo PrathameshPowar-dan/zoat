@@ -220,7 +220,7 @@ export type OrderStatusHistoryCreateInput = {
   id?: string
   status: $Enums.OrderStatus
   createdAt?: Date | string
-  order: Prisma.OrderCreateNestedOneWithoutOrderStatusHistoriesInput
+  order: Prisma.OrderCreateNestedOneWithoutStatusHistoryInput
 }
 
 export type OrderStatusHistoryUncheckedCreateInput = {
@@ -234,7 +234,7 @@ export type OrderStatusHistoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  order?: Prisma.OrderUpdateOneRequiredWithoutOrderStatusHistoriesNestedInput
+  order?: Prisma.OrderUpdateOneRequiredWithoutStatusHistoryNestedInput
 }
 
 export type OrderStatusHistoryUncheckedUpdateInput = {
