@@ -121,3 +121,8 @@ export type MenuRating = Prisma.MenuRatingModel
  * 
  */
 export type OrderStatusHistory = Prisma.OrderStatusHistoryModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel

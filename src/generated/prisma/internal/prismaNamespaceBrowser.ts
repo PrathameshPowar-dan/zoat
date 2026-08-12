@@ -66,7 +66,8 @@ export const ModelName = {
   FavoriteRestaurant: 'FavoriteRestaurant',
   MenuInteraction: 'MenuInteraction',
   MenuRating: 'MenuRating',
-  OrderStatusHistory: 'OrderStatusHistory'
+  OrderStatusHistory: 'OrderStatusHistory',
+  Notification: 'Notification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -99,6 +100,7 @@ export const UserScalarFieldEnum = {
   preferredLanguage: 'preferredLanguage',
   preferredCuisines: 'preferredCuisines',
   profilePictureUrl: 'profilePictureUrl',
+  fcmToken: 'fcmToken',
   isDeleted: 'isDeleted',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
@@ -317,6 +319,18 @@ export const OrderStatusHistoryScalarFieldEnum = {
 } as const
 
 export type OrderStatusHistoryScalarFieldEnum = (typeof OrderStatusHistoryScalarFieldEnum)[keyof typeof OrderStatusHistoryScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  body: 'body',
+  isRead: 'isRead',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
 export const SortOrder = {

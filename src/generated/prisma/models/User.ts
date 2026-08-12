@@ -37,6 +37,7 @@ export type UserMinAggregateOutputType = {
   dateOfBirth: Date | null
   preferredLanguage: string | null
   profilePictureUrl: string | null
+  fcmToken: string | null
   isDeleted: boolean | null
   deletedAt: Date | null
   createdAt: Date | null
@@ -56,6 +57,7 @@ export type UserMaxAggregateOutputType = {
   dateOfBirth: Date | null
   preferredLanguage: string | null
   profilePictureUrl: string | null
+  fcmToken: string | null
   isDeleted: boolean | null
   deletedAt: Date | null
   createdAt: Date | null
@@ -76,6 +78,7 @@ export type UserCountAggregateOutputType = {
   preferredLanguage: number
   preferredCuisines: number
   profilePictureUrl: number
+  fcmToken: number
   isDeleted: number
   deletedAt: number
   createdAt: number
@@ -97,6 +100,7 @@ export type UserMinAggregateInputType = {
   dateOfBirth?: true
   preferredLanguage?: true
   profilePictureUrl?: true
+  fcmToken?: true
   isDeleted?: true
   deletedAt?: true
   createdAt?: true
@@ -116,6 +120,7 @@ export type UserMaxAggregateInputType = {
   dateOfBirth?: true
   preferredLanguage?: true
   profilePictureUrl?: true
+  fcmToken?: true
   isDeleted?: true
   deletedAt?: true
   createdAt?: true
@@ -136,6 +141,7 @@ export type UserCountAggregateInputType = {
   preferredLanguage?: true
   preferredCuisines?: true
   profilePictureUrl?: true
+  fcmToken?: true
   isDeleted?: true
   deletedAt?: true
   createdAt?: true
@@ -229,6 +235,7 @@ export type UserGroupByOutputType = {
   preferredLanguage: string | null
   preferredCuisines: string[]
   profilePictureUrl: string | null
+  fcmToken: string | null
   isDeleted: boolean
   deletedAt: Date | null
   createdAt: Date
@@ -270,6 +277,7 @@ export type UserWhereInput = {
   preferredLanguage?: Prisma.StringNullableFilter<"User"> | string | null
   preferredCuisines?: Prisma.StringNullableListFilter<"User">
   profilePictureUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  fcmToken?: Prisma.StringNullableFilter<"User"> | string | null
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -280,6 +288,7 @@ export type UserWhereInput = {
   supportTickets?: Prisma.SupportTicketListRelationFilter
   menuRatings?: Prisma.MenuRatingListRelationFilter
   favoriteMenuItems?: Prisma.FavoriteMenuItemListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
   favoriteRestaurants?: Prisma.FavoriteRestaurantListRelationFilter
   menuInteractions?: Prisma.MenuInteractionListRelationFilter
 }
@@ -298,6 +307,7 @@ export type UserOrderByWithRelationInput = {
   preferredLanguage?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredCuisines?: Prisma.SortOrder
   profilePictureUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fcmToken?: Prisma.SortOrderInput | Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -308,6 +318,7 @@ export type UserOrderByWithRelationInput = {
   supportTickets?: Prisma.SupportTicketOrderByRelationAggregateInput
   menuRatings?: Prisma.MenuRatingOrderByRelationAggregateInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantOrderByRelationAggregateInput
   menuInteractions?: Prisma.MenuInteractionOrderByRelationAggregateInput
 }
@@ -329,6 +340,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   preferredLanguage?: Prisma.StringNullableFilter<"User"> | string | null
   preferredCuisines?: Prisma.StringNullableListFilter<"User">
   profilePictureUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  fcmToken?: Prisma.StringNullableFilter<"User"> | string | null
   isDeleted?: Prisma.BoolFilter<"User"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -339,6 +351,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   supportTickets?: Prisma.SupportTicketListRelationFilter
   menuRatings?: Prisma.MenuRatingListRelationFilter
   favoriteMenuItems?: Prisma.FavoriteMenuItemListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
   favoriteRestaurants?: Prisma.FavoriteRestaurantListRelationFilter
   menuInteractions?: Prisma.MenuInteractionListRelationFilter
 }, "id" | "firebaseUid" | "phone" | "email">
@@ -357,6 +370,7 @@ export type UserOrderByWithAggregationInput = {
   preferredLanguage?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredCuisines?: Prisma.SortOrder
   profilePictureUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fcmToken?: Prisma.SortOrderInput | Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -383,6 +397,7 @@ export type UserScalarWhereWithAggregatesInput = {
   preferredLanguage?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   preferredCuisines?: Prisma.StringNullableListFilter<"User">
   profilePictureUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  fcmToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isDeleted?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -403,6 +418,7 @@ export type UserCreateInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -413,6 +429,7 @@ export type UserCreateInput = {
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
 }
@@ -431,6 +448,7 @@ export type UserUncheckedCreateInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -441,6 +459,7 @@ export type UserUncheckedCreateInput = {
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
 }
@@ -459,6 +478,7 @@ export type UserUpdateInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -469,6 +489,7 @@ export type UserUpdateInput = {
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
 }
@@ -487,6 +508,7 @@ export type UserUncheckedUpdateInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -497,6 +519,7 @@ export type UserUncheckedUpdateInput = {
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -515,6 +538,7 @@ export type UserCreateManyInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -535,6 +559,7 @@ export type UserUpdateManyMutationInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -555,6 +580,7 @@ export type UserUncheckedUpdateManyInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -583,6 +609,7 @@ export type UserCountOrderByAggregateInput = {
   preferredLanguage?: Prisma.SortOrder
   preferredCuisines?: Prisma.SortOrder
   profilePictureUrl?: Prisma.SortOrder
+  fcmToken?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -602,6 +629,7 @@ export type UserMaxOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   profilePictureUrl?: Prisma.SortOrder
+  fcmToken?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -621,6 +649,7 @@ export type UserMinOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   preferredLanguage?: Prisma.SortOrder
   profilePictureUrl?: Prisma.SortOrder
+  fcmToken?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -777,6 +806,20 @@ export type UserUpdateOneRequiredWithoutMenuRatingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMenuRatingsInput, Prisma.UserUpdateWithoutMenuRatingsInput>, Prisma.UserUncheckedUpdateWithoutMenuRatingsInput>
 }
 
+export type UserCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
 export type UserCreateWithoutAddressesInput = {
   id?: string
   firebaseUid?: string | null
@@ -791,6 +834,7 @@ export type UserCreateWithoutAddressesInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -800,6 +844,7 @@ export type UserCreateWithoutAddressesInput = {
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
 }
@@ -818,6 +863,7 @@ export type UserUncheckedCreateWithoutAddressesInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -827,6 +873,7 @@ export type UserUncheckedCreateWithoutAddressesInput = {
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
 }
@@ -861,6 +908,7 @@ export type UserUpdateWithoutAddressesInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -870,6 +918,7 @@ export type UserUpdateWithoutAddressesInput = {
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
 }
@@ -888,6 +937,7 @@ export type UserUncheckedUpdateWithoutAddressesInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -897,6 +947,7 @@ export type UserUncheckedUpdateWithoutAddressesInput = {
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -915,6 +966,7 @@ export type UserCreateWithoutOrdersInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -924,6 +976,7 @@ export type UserCreateWithoutOrdersInput = {
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
 }
@@ -942,6 +995,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -951,6 +1005,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
 }
@@ -985,6 +1040,7 @@ export type UserUpdateWithoutOrdersInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -994,6 +1050,7 @@ export type UserUpdateWithoutOrdersInput = {
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
 }
@@ -1012,6 +1069,7 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1021,6 +1079,7 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1039,6 +1098,7 @@ export type UserCreateWithoutTableBookingsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -1048,6 +1108,7 @@ export type UserCreateWithoutTableBookingsInput = {
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
 }
@@ -1066,6 +1127,7 @@ export type UserUncheckedCreateWithoutTableBookingsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -1075,6 +1137,7 @@ export type UserUncheckedCreateWithoutTableBookingsInput = {
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1109,6 +1172,7 @@ export type UserUpdateWithoutTableBookingsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1118,6 +1182,7 @@ export type UserUpdateWithoutTableBookingsInput = {
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
 }
@@ -1136,6 +1201,7 @@ export type UserUncheckedUpdateWithoutTableBookingsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1145,6 +1211,7 @@ export type UserUncheckedUpdateWithoutTableBookingsInput = {
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1163,6 +1230,7 @@ export type UserCreateWithoutSupportTicketsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -1172,6 +1240,7 @@ export type UserCreateWithoutSupportTicketsInput = {
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
 }
@@ -1190,6 +1259,7 @@ export type UserUncheckedCreateWithoutSupportTicketsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -1199,6 +1269,7 @@ export type UserUncheckedCreateWithoutSupportTicketsInput = {
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1233,6 +1304,7 @@ export type UserUpdateWithoutSupportTicketsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1242,6 +1314,7 @@ export type UserUpdateWithoutSupportTicketsInput = {
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
 }
@@ -1260,6 +1333,7 @@ export type UserUncheckedUpdateWithoutSupportTicketsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1269,6 +1343,7 @@ export type UserUncheckedUpdateWithoutSupportTicketsInput = {
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1287,6 +1362,7 @@ export type UserCreateWithoutFavoriteMenuItemsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -1296,6 +1372,7 @@ export type UserCreateWithoutFavoriteMenuItemsInput = {
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
 }
@@ -1314,6 +1391,7 @@ export type UserUncheckedCreateWithoutFavoriteMenuItemsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -1323,6 +1401,7 @@ export type UserUncheckedCreateWithoutFavoriteMenuItemsInput = {
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1357,6 +1436,7 @@ export type UserUpdateWithoutFavoriteMenuItemsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1366,6 +1446,7 @@ export type UserUpdateWithoutFavoriteMenuItemsInput = {
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
 }
@@ -1384,6 +1465,7 @@ export type UserUncheckedUpdateWithoutFavoriteMenuItemsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1393,6 +1475,7 @@ export type UserUncheckedUpdateWithoutFavoriteMenuItemsInput = {
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1411,6 +1494,7 @@ export type UserCreateWithoutFavoriteRestaurantsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -1421,6 +1505,7 @@ export type UserCreateWithoutFavoriteRestaurantsInput = {
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
 }
 
@@ -1438,6 +1523,7 @@ export type UserUncheckedCreateWithoutFavoriteRestaurantsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -1448,6 +1534,7 @@ export type UserUncheckedCreateWithoutFavoriteRestaurantsInput = {
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1481,6 +1568,7 @@ export type UserUpdateWithoutFavoriteRestaurantsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1491,6 +1579,7 @@ export type UserUpdateWithoutFavoriteRestaurantsInput = {
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
 }
 
@@ -1508,6 +1597,7 @@ export type UserUncheckedUpdateWithoutFavoriteRestaurantsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1518,6 +1608,7 @@ export type UserUncheckedUpdateWithoutFavoriteRestaurantsInput = {
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1535,6 +1626,7 @@ export type UserCreateWithoutMenuInteractionsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -1545,6 +1637,7 @@ export type UserCreateWithoutMenuInteractionsInput = {
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantCreateNestedManyWithoutUserInput
 }
 
@@ -1562,6 +1655,7 @@ export type UserUncheckedCreateWithoutMenuInteractionsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -1572,6 +1666,7 @@ export type UserUncheckedCreateWithoutMenuInteractionsInput = {
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1605,6 +1700,7 @@ export type UserUpdateWithoutMenuInteractionsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1615,6 +1711,7 @@ export type UserUpdateWithoutMenuInteractionsInput = {
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUpdateManyWithoutUserNestedInput
 }
 
@@ -1632,6 +1729,7 @@ export type UserUncheckedUpdateWithoutMenuInteractionsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1642,6 +1740,7 @@ export type UserUncheckedUpdateWithoutMenuInteractionsInput = {
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
   menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1659,6 +1758,7 @@ export type UserCreateWithoutMenuRatingsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -1668,6 +1768,7 @@ export type UserCreateWithoutMenuRatingsInput = {
   addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
 }
@@ -1686,6 +1787,7 @@ export type UserUncheckedCreateWithoutMenuRatingsInput = {
   preferredLanguage?: string | null
   preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
   profilePictureUrl?: string | null
+  fcmToken?: string | null
   isDeleted?: boolean
   deletedAt?: Date | string | null
   createdAt?: Date | string
@@ -1695,6 +1797,7 @@ export type UserUncheckedCreateWithoutMenuRatingsInput = {
   addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedCreateNestedManyWithoutUserInput
   menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1729,6 +1832,7 @@ export type UserUpdateWithoutMenuRatingsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1738,6 +1842,7 @@ export type UserUpdateWithoutMenuRatingsInput = {
   addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
 }
@@ -1756,6 +1861,7 @@ export type UserUncheckedUpdateWithoutMenuRatingsInput = {
   preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
   profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1764,6 +1870,139 @@ export type UserUncheckedUpdateWithoutMenuRatingsInput = {
   tableBookings?: Prisma.TableBookingUncheckedUpdateManyWithoutUserNestedInput
   addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutNotificationsInput = {
+  id?: string
+  firebaseUid?: string | null
+  password?: string | null
+  name?: string | null
+  phone?: string | null
+  email?: string | null
+  role?: $Enums.Role
+  address?: string | null
+  gender?: string | null
+  dateOfBirth?: Date | string | null
+  preferredLanguage?: string | null
+  preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
+  profilePictureUrl?: string | null
+  fcmToken?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  tableBookings?: Prisma.TableBookingCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemCreateNestedManyWithoutUserInput
+  favoriteRestaurants?: Prisma.FavoriteRestaurantCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  firebaseUid?: string | null
+  password?: string | null
+  name?: string | null
+  phone?: string | null
+  email?: string | null
+  role?: $Enums.Role
+  address?: string | null
+  gender?: string | null
+  dateOfBirth?: Date | string | null
+  preferredLanguage?: string | null
+  preferredCuisines?: Prisma.UserCreatepreferredCuisinesInput | string[]
+  profilePictureUrl?: string | null
+  fcmToken?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  tableBookings?: Prisma.TableBookingUncheckedCreateNestedManyWithoutUserInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  menuRatings?: Prisma.MenuRatingUncheckedCreateNestedManyWithoutUserInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedCreateNestedManyWithoutUserInput
+  favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedCreateNestedManyWithoutUserInput
+  menuInteractions?: Prisma.MenuInteractionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+}
+
+export type UserUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firebaseUid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
+  profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  tableBookings?: Prisma.TableBookingUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUpdateManyWithoutUserNestedInput
+  favoriteMenuItems?: Prisma.FavoriteMenuItemUpdateManyWithoutUserNestedInput
+  favoriteRestaurants?: Prisma.FavoriteRestaurantUpdateManyWithoutUserNestedInput
+  menuInteractions?: Prisma.MenuInteractionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firebaseUid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredCuisines?: Prisma.UserUpdatepreferredCuisinesInput | string[]
+  profilePictureUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fcmToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  tableBookings?: Prisma.TableBookingUncheckedUpdateManyWithoutUserNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  menuRatings?: Prisma.MenuRatingUncheckedUpdateManyWithoutUserNestedInput
   favoriteMenuItems?: Prisma.FavoriteMenuItemUncheckedUpdateManyWithoutUserNestedInput
   favoriteRestaurants?: Prisma.FavoriteRestaurantUncheckedUpdateManyWithoutUserNestedInput
   menuInteractions?: Prisma.MenuInteractionUncheckedUpdateManyWithoutUserNestedInput
@@ -1781,6 +2020,7 @@ export type UserCountOutputType = {
   supportTickets: number
   menuRatings: number
   favoriteMenuItems: number
+  notifications: number
   favoriteRestaurants: number
   menuInteractions: number
 }
@@ -1792,6 +2032,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   supportTickets?: boolean | UserCountOutputTypeCountSupportTicketsArgs
   menuRatings?: boolean | UserCountOutputTypeCountMenuRatingsArgs
   favoriteMenuItems?: boolean | UserCountOutputTypeCountFavoriteMenuItemsArgs
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   favoriteRestaurants?: boolean | UserCountOutputTypeCountFavoriteRestaurantsArgs
   menuInteractions?: boolean | UserCountOutputTypeCountMenuInteractionsArgs
 }
@@ -1851,6 +2092,13 @@ export type UserCountOutputTypeCountFavoriteMenuItemsArgs<ExtArgs extends runtim
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountFavoriteRestaurantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.FavoriteRestaurantWhereInput
 }
@@ -1877,6 +2125,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   preferredLanguage?: boolean
   preferredCuisines?: boolean
   profilePictureUrl?: boolean
+  fcmToken?: boolean
   isDeleted?: boolean
   deletedAt?: boolean
   createdAt?: boolean
@@ -1887,6 +2136,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   supportTickets?: boolean | Prisma.User$supportTicketsArgs<ExtArgs>
   menuRatings?: boolean | Prisma.User$menuRatingsArgs<ExtArgs>
   favoriteMenuItems?: boolean | Prisma.User$favoriteMenuItemsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   favoriteRestaurants?: boolean | Prisma.User$favoriteRestaurantsArgs<ExtArgs>
   menuInteractions?: boolean | Prisma.User$menuInteractionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1906,6 +2156,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   preferredLanguage?: boolean
   preferredCuisines?: boolean
   profilePictureUrl?: boolean
+  fcmToken?: boolean
   isDeleted?: boolean
   deletedAt?: boolean
   createdAt?: boolean
@@ -1926,6 +2177,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   preferredLanguage?: boolean
   preferredCuisines?: boolean
   profilePictureUrl?: boolean
+  fcmToken?: boolean
   isDeleted?: boolean
   deletedAt?: boolean
   createdAt?: boolean
@@ -1946,13 +2198,14 @@ export type UserSelectScalar = {
   preferredLanguage?: boolean
   preferredCuisines?: boolean
   profilePictureUrl?: boolean
+  fcmToken?: boolean
   isDeleted?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firebaseUid" | "password" | "name" | "phone" | "email" | "role" | "address" | "gender" | "dateOfBirth" | "preferredLanguage" | "preferredCuisines" | "profilePictureUrl" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firebaseUid" | "password" | "name" | "phone" | "email" | "role" | "address" | "gender" | "dateOfBirth" | "preferredLanguage" | "preferredCuisines" | "profilePictureUrl" | "fcmToken" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   tableBookings?: boolean | Prisma.User$tableBookingsArgs<ExtArgs>
@@ -1960,6 +2213,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   supportTickets?: boolean | Prisma.User$supportTicketsArgs<ExtArgs>
   menuRatings?: boolean | Prisma.User$menuRatingsArgs<ExtArgs>
   favoriteMenuItems?: boolean | Prisma.User$favoriteMenuItemsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   favoriteRestaurants?: boolean | Prisma.User$favoriteRestaurantsArgs<ExtArgs>
   menuInteractions?: boolean | Prisma.User$menuInteractionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1976,6 +2230,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     supportTickets: Prisma.$SupportTicketPayload<ExtArgs>[]
     menuRatings: Prisma.$MenuRatingPayload<ExtArgs>[]
     favoriteMenuItems: Prisma.$FavoriteMenuItemPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
     favoriteRestaurants: Prisma.$FavoriteRestaurantPayload<ExtArgs>[]
     menuInteractions: Prisma.$MenuInteractionPayload<ExtArgs>[]
   }
@@ -1993,6 +2248,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     preferredLanguage: string | null
     preferredCuisines: string[]
     profilePictureUrl: string | null
+    fcmToken: string | null
     isDeleted: boolean
     deletedAt: Date | null
     createdAt: Date
@@ -2397,6 +2653,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   supportTickets<T extends Prisma.User$supportTicketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$supportTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   menuRatings<T extends Prisma.User$menuRatingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$menuRatingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MenuRatingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   favoriteMenuItems<T extends Prisma.User$favoriteMenuItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoriteMenuItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoriteMenuItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   favoriteRestaurants<T extends Prisma.User$favoriteRestaurantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoriteRestaurantsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoriteRestaurantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   menuInteractions<T extends Prisma.User$menuInteractionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$menuInteractionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MenuInteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2441,6 +2698,7 @@ export interface UserFieldRefs {
   readonly preferredLanguage: Prisma.FieldRef<"User", 'String'>
   readonly preferredCuisines: Prisma.FieldRef<"User", 'String[]'>
   readonly profilePictureUrl: Prisma.FieldRef<"User", 'String'>
+  readonly fcmToken: Prisma.FieldRef<"User", 'String'>
   readonly isDeleted: Prisma.FieldRef<"User", 'Boolean'>
   readonly deletedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -2979,6 +3237,30 @@ export type User$favoriteMenuItemsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.FavoriteMenuItemScalarFieldEnum | Prisma.FavoriteMenuItemScalarFieldEnum[]
+}
+
+/**
+ * User.notifications
+ */
+export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**

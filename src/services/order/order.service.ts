@@ -1,6 +1,7 @@
 import prisma from "../../utils/prisma.js"
 import { ApiError } from "../../utils/ApiError.js";
 import { OrderStatus } from "../../constants/index.js";
+import notificationService from '../notification/notification.service.js';
 
 class OrderService {
     async checkout(data: {
@@ -22,7 +23,7 @@ class OrderService {
         }
 
         // Using a transaction ensures that if anything fails, NO partial data is saved
-        return prisma.$transaction(async (tx) => {
+        const orderResult = await prisma.$transaction(async (tx) => {
             // Fetch the restaurant early to ensure it exists AND to get its name for Takeaway
             const restaurant = await tx.restaurant.findUnique({
                 where: { id: restaurantId },
@@ -41,7 +42,6 @@ class OrderService {
                     throw new ApiError(400, "Delivery address is required for DELIVERY orders.");
                 }
 
-                // FIX: Changed findUnique to findFirst
                 const address = await tx.address.findFirst({
                     where: { id: addressId, userId },
                 });
@@ -89,7 +89,7 @@ class OrderService {
             // If they pick it up themselves, fee is 0. If we deliver, standard ₹40 fee.
             const deliveryFee = orderType === 'DELIVERY' ? 40 : 0;
 
-            //Calculate the Grand Total
+            // Calculate the Grand Total
             const finalTotalAmount = foodTotal + deliveryFee + tipAmount;
 
             // Create the Order with the new Financial Breakdown
@@ -110,12 +110,48 @@ class OrderService {
                 },
                 include: {
                     items: { include: { menuItem: { select: { name: true, imageUrl: true } } } },
-                    restaurant: { select: { name: true, imageUrl: true, address: true } }
+                    restaurant: { select: { name: true, imageUrl: true, address: true, adminId: true } },
+                    user: { select: { name: true, fcmToken: true } }
                 }
             });
 
             return newOrder;
         });
+
+        // ==========================================
+        // 🚀 CHECKOUT NOTIFICATION LOGIC 🚀
+        // ==========================================
+
+        // Notify the Customer (Order Placed)
+        if (orderResult.user) {
+            notificationService.sendOrderStatusNotification(
+                orderResult.userId,
+                "Order Placed Successfully! 🛒",
+                `Your order at ${orderResult.restaurant.name} has been placed. Waiting for the restaurant to accept!`,
+                orderResult.user.fcmToken
+            );
+        }
+
+        // Notify the Restaurant Admin (New Order Alert)
+        if (orderResult.restaurant.adminId) {
+            // Fetch the admin's push token from the DB
+            const adminUser = await prisma.user.findUnique({
+                where: { id: orderResult.restaurant.adminId },
+                select: { id: true, fcmToken: true }
+            });
+
+            if (adminUser) {
+                const customerName = orderResult.user?.name || "A customer";
+                notificationService.sendOrderStatusNotification(
+                    adminUser.id,
+                    "New Order Received! 🚨",
+                    `${customerName} just placed a ₹${orderResult.totalAmount} ${orderResult.orderType} order! Open your dashboard to accept it.`,
+                    adminUser.fcmToken
+                );
+            }
+        }
+
+        return orderResult;
     }
 
     async getMyOrders(userId: string) {
@@ -207,71 +243,90 @@ class OrderService {
         expectedStatus: OrderStatus,
         nextStatus: OrderStatus
     ) {
-        return prisma.$transaction(async (tx) => {
+        // We do the database update transaction first
+        const updatedOrder = await prisma.$transaction(async (tx) => {
             const order = await tx.order.findUnique({
-                where: {
-                    id: orderId,
-                },
-                include: {
-                    items: true,
-                },
+                where: { id: orderId },
+                include: { items: true, user: { select: { fcmToken: true } } },
             });
 
-            if (!order) {
-                throw new ApiError(404, "Order not found.");
-            }
-
+            if (!order) throw new ApiError(404, "Order not found.");
             if (order.status !== expectedStatus) {
-                throw new ApiError(
-                    400,
-                    `Order must be ${expectedStatus} before changing to ${nextStatus}.`
-                );
+                throw new ApiError(400, `Order must be ${expectedStatus} before changing to ${nextStatus}.`);
             }
 
-            const updatedOrder = await tx.order.update({
-                where: {
-                    id: orderId,
-                },
+            const newOrderData = await tx.order.update({
+                where: { id: orderId },
                 data: {
                     status: nextStatus,
-                    statusHistory: {
-                        create: {
-                            status: nextStatus,
-                        },
-                    },
+                    statusHistory: { create: { status: nextStatus } },
                 },
                 include: {
                     restaurant: true,
-                    items: {
-                        include: {
-                            menuItem: true,
-                        },
-                    },
-                    statusHistory: {
-                        orderBy: {
-                            createdAt: "asc",
-                        },
-                    },
+                    items: { include: { menuItem: true } },
+                    statusHistory: { orderBy: { createdAt: "asc" } },
+                    user: { select: { id: true, fcmToken: true } } // Include user ID and Token in the return
                 },
             });
 
             if (nextStatus === OrderStatus.DELIVERED) {
                 for (const item of order.items) {
                     await tx.menuItem.update({
-                        where: {
-                            id: item.menuItemId,
-                        },
-                        data: {
-                            orderCount: {
-                                increment: item.quantity,
-                            },
-                        },
+                        where: { id: item.menuItemId },
+                        data: { orderCount: { increment: item.quantity } },
                     });
                 }
             }
-
-            return updatedOrder;
+            return newOrderData;
         });
+
+        // ==========================================
+        // 🚀 THE NEW NOTIFICATION LOGIC GOES HERE 🚀
+        // ==========================================
+
+        let title = "";
+        let body = "";
+
+        // Intelligently craft the message based on the status
+        switch (nextStatus) {
+            case OrderStatus.ACCEPTED:
+                title = "Order Accepted! 👨‍🍳";
+                body = `${updatedOrder.restaurant.name} has accepted your order and is preparing it now.`;
+                break;
+            case OrderStatus.PREPARING:
+                title = "Food is Cooking! 🍳";
+                body = `Your meal from ${updatedOrder.restaurant.name} is currently being prepared.`;
+                break;
+            case OrderStatus.READY_FOR_PICKUP:
+                title = "Order Ready! 🛍️";
+                body = `Your order from ${updatedOrder.restaurant.name} is packed and ready for pickup!`;
+                break;
+            case OrderStatus.OUT_FOR_DELIVERY:
+                title = "Out for Delivery! 🛵";
+                body = `Your rider has picked up your food. Keep an eye on the door!`;
+                break;
+            case OrderStatus.DELIVERED:
+                title = "Delivered! 🎉";
+                body = `Enjoy your meal from ${updatedOrder.restaurant.name}!`;
+                break;
+            case OrderStatus.CANCELLED:
+            case OrderStatus.REJECTED:
+                title = "Order Cancelled ❌";
+                body = `Unfortunately, your order from ${updatedOrder.restaurant.name} was cancelled.`;
+                break;
+        }
+
+        // Fire the notification in the background (we don't await it, so the API responds to the restaurant instantly!)
+        if (title && body && updatedOrder.user) {
+            notificationService.sendOrderStatusNotification(
+                updatedOrder.user.id,
+                title,
+                body,
+                updatedOrder.user.fcmToken
+            );
+        }
+
+        return updatedOrder;
     }
 
     async acceptOrder(orderId: string) {
