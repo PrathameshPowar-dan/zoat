@@ -73,6 +73,7 @@ export const getVegMenu = asyncHandler(async (req: Request, res: Response) => {
     );
 });
 
+// API - Get Menu by Restaurant ID
 export const getMenuByRestaurant = asyncHandler(async (req: Request, res: Response) => {
     const { restaurantId } = req.params;
     const { category } = req.query;
@@ -93,5 +94,50 @@ export const getMenuByRestaurant = asyncHandler(async (req: Request, res: Respon
 
     res.status(200).json(
         new ApiResponse(200, menuItems, "Menu items fetched successfully.")
+    );
+});
+
+// Search for dishes with Pagination (Infinite Scroll support)
+export const searchDishes = asyncHandler(async (req: Request, res: Response) => {
+    // Grab query, page, and limit from the URL
+    const { query, page = "1", limit = "20" } = req.query;
+
+    if (!query || typeof query !== 'string') {
+        throw new ApiError(400, "Please provide a valid search query.");
+    }
+
+    // Convert to numbers for Prisma math
+    const pageNumber = parseInt(page as string, 10);
+    const limitNumber = parseInt(limit as string, 10);
+    
+    // Calculate how many items to "skip"
+    // Example: Page 1 skips 0. Page 2 skips 20. Page 3 skips 40.
+    const skip = (pageNumber - 1) * limitNumber;
+
+    const dishes = await prisma.menuItem.findMany({
+        where: {
+            isAvailable: true, 
+            OR: [
+                { name: { contains: query, mode: "insensitive" } },
+                { category: { contains: query, mode: "insensitive" } },
+            ]
+        },
+        include: {
+            restaurant: {
+                select: {
+                    id: true,
+                    name: true,
+                    imageUrl: true,
+                    rating: true,
+                    isPureVeg: true
+                }
+            }
+        },
+        skip: skip,
+        take: limitNumber
+    });
+
+    res.status(200).json(
+        new ApiResponse(200, dishes, `Search results for page ${pageNumber} fetched successfully.`)
     );
 });
