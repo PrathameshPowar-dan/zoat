@@ -72,3 +72,26 @@ export const getVegMenu = asyncHandler(async (req: Request, res: Response) => {
         )
     );
 });
+
+export const getMenuByRestaurant = asyncHandler(async (req: Request, res: Response) => {
+    const { restaurantId } = req.params;
+    const { category } = req.query;
+
+    const filters: any = { 
+        restaurantId, 
+        isAvailable: true 
+    };
+
+    if (category) {
+        filters.category = category as string;
+    }
+
+    const menuItems = await prisma.menuItem.findMany({
+        where: filters,
+        orderBy: { name: "asc" }
+    });
+
+    res.status(200).json(
+        new ApiResponse(200, menuItems, "Menu items fetched successfully.")
+    );
+});

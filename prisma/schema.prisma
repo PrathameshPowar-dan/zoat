@@ -153,6 +153,7 @@ model Order {
   deliveryPartnerId String?
   status            OrderStatus      @default(PENDING)
   orderType         OrderType        @default(DELIVERY)
+  specialInstructions String?
   
   // The New Financial Breakdown 
   itemTotal         Float            @default(0) // Cost of just the food

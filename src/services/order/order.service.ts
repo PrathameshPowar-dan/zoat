@@ -10,13 +10,14 @@ class OrderService {
         addressId?: string;
         orderType?: 'DELIVERY' | 'TAKEAWAY';
         tipAmount?: number;
+        specialInstructions?: string;
         items: {
             menuItemId: string;
             quantity: number;
         }[];
     }) {
         // Set defaults if the frontend forgets to send them
-        const { userId, restaurantId, addressId, items, orderType = 'DELIVERY', tipAmount = 0 } = data;
+        const { userId, restaurantId, addressId, items, orderType = 'DELIVERY', tipAmount = 0, specialInstructions = '' } = data;
 
         if (!restaurantId || !items?.length) {
             throw new ApiError(400, "Restaurant ID and items are required.");
@@ -102,6 +103,7 @@ class OrderService {
                     itemTotal: foodTotal,          // <-- Saves food cost 
                     deliveryFee: deliveryFee,      // <-- Saves delivery fee
                     tipAmount: tipAmount,          // <-- Saves rider tip separately!
+                    specialInstructions,
                     totalAmount: finalTotalAmount, // <-- Grand total
                     status: 'PENDING',
                     items: {

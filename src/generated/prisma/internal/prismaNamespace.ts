@@ -1837,6 +1837,7 @@ export const OrderScalarFieldEnum = {
   deliveryPartnerId: 'deliveryPartnerId',
   status: 'status',
   orderType: 'orderType',
+  specialInstructions: 'specialInstructions',
   itemTotal: 'itemTotal',
   deliveryFee: 'deliveryFee',
   tipAmount: 'tipAmount',
