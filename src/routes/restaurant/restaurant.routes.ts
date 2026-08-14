@@ -10,7 +10,8 @@ import {
     filterRestaurants,
     getRestaurantMenu,
     getCategoryWiseRestaurants,
-    getPureVegRestaurants
+    getPureVegRestaurants,
+    getTopRatedVegRestaurants
 } from '../../controllers/restaurant/restaurant.controller.js';
 import {
     createTableBooking,
@@ -28,6 +29,7 @@ router.get('/categories/:id', getCategoryWiseRestaurants);
 router.get('/list/veg', getPureVegRestaurants);
 router.get('/list', getRestaurantList);
 router.get('/top-rated', getTopRated);
+router.get('/top-rated/veg', getTopRatedVegRestaurants);
 router.get('/detail/:id', getRestaurantDetail); 
 
 // The dedicated Search API

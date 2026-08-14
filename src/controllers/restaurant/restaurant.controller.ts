@@ -346,3 +346,22 @@ export const getPureVegRestaurants = asyncHandler(async (req: Request, res: Resp
 
     res.status(200).json(new ApiResponse(200, restaurants, "Pure Veg restaurants fetched successfully"));
 });
+
+// API - Top Rated Pure Veg Restaurants API
+export const getTopRatedVegRestaurants = asyncHandler(async (req: Request, res: Response) => {
+    const limit = req.query.limit ? parseInt(req.query.limit as string) : 10;
+
+    const pureVegRestaurants = await prisma.restaurant.findMany({
+        where: { 
+            isPureVeg: true 
+        },
+        orderBy: { 
+            rating: "desc"
+        },
+        take: limit
+    });
+
+    res.status(200).json(
+        new ApiResponse(200, pureVegRestaurants, "Top rated pure veg restaurants fetched successfully.")
+    );
+});
