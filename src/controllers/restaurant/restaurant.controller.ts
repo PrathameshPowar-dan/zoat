@@ -309,6 +309,7 @@ export const getRestaurantMenu = asyncHandler(async (req, res: Response) => {
 // API - Category Wise Restaurants API
 export const getCategoryWiseRestaurants = asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
+    const { isPureVeg } = req.query;
 
     const category = await prisma.category.findUnique({
         where: { id: id as string },
@@ -319,10 +320,18 @@ export const getCategoryWiseRestaurants = asyncHandler(async (req: Request, res:
         throw new ApiError(404, "Category not found");
     }
 
+    const whereClause: any = {
+        cuisines: { has: category.name }
+    };
+    
+    if (isPureVeg === 'true') {
+        whereClause.isPureVeg = true;
+    } else if (isPureVeg === 'false') {
+        whereClause.isPureVeg = false; // Optional: Allows fetching ONLY non-veg places
+    }
+
     const restaurants = await prisma.restaurant.findMany({
-        where: {
-            cuisines: { has: category.name },
-        },
+        where: whereClause,
     });
 
     res.status(200).json(

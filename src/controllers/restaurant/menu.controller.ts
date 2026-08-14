@@ -97,31 +97,45 @@ export const getMenuByRestaurant = asyncHandler(async (req: Request, res: Respon
     );
 });
 
-// Search for dishes with Pagination (Infinite Scroll support)
+// Search for dishes with Pagination and Dynamic Filters
 export const searchDishes = asyncHandler(async (req: Request, res: Response) => {
-    // Grab query, page, and limit from the URL
-    const { query, page = "1", limit = "20" } = req.query;
+    // 1. Grab everything from the URL query
+    const { query, page = "1", limit = "20", isVeg, isPureVeg } = req.query;
 
     if (!query || typeof query !== 'string') {
         throw new ApiError(400, "Please provide a valid search query.");
     }
 
-    // Convert to numbers for Prisma math
     const pageNumber = parseInt(page as string, 10);
     const limitNumber = parseInt(limit as string, 10);
-    
-    // Calculate how many items to "skip"
-    // Example: Page 1 skips 0. Page 2 skips 20. Page 3 skips 40.
     const skip = (pageNumber - 1) * limitNumber;
 
+    // 2. Build the Base Query (Stuff that is ALWAYS required)
+    const whereClause: any = {
+        isAvailable: true, 
+        OR: [
+            { name: { contains: query, mode: "insensitive" } },
+            { category: { contains: query, mode: "insensitive" } },
+        ]
+    };
+
+    // 3. 🟢 THE DYNAMIC FILTERS 🟢
+    
+    // If the user toggles "Veg Only" for the DISH
+    if (isVeg === 'true') {
+        whereClause.isVeg = true;
+    }
+
+    // If the user toggles "Pure Veg Restaurants Only"
+    if (isPureVeg === 'true') {
+        whereClause.restaurant = {
+            isPureVeg: true
+        };
+    }
+
+    // 4. Execute the Query
     const dishes = await prisma.menuItem.findMany({
-        where: {
-            isAvailable: true, 
-            OR: [
-                { name: { contains: query, mode: "insensitive" } },
-                { category: { contains: query, mode: "insensitive" } },
-            ]
-        },
+        where: whereClause, // <-- Pass the dynamic object here!
         include: {
             restaurant: {
                 select: {
@@ -138,6 +152,6 @@ export const searchDishes = asyncHandler(async (req: Request, res: Response) => 
     });
 
     res.status(200).json(
-        new ApiResponse(200, dishes, `Search results for page ${pageNumber} fetched successfully.`)
+        new ApiResponse(200, dishes, `Search results fetched successfully.`)
     );
 });
